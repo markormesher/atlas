@@ -9,10 +9,11 @@ const googleApiKey = SECRETS["google_api_key"];
 const app = express();
 
 app.use(express.static(path.join(__dirname, "static")));
+
 app.get("/places", (req, res) => {
-	var places = getPlaces();
-	res.json(places);
+	res.json(getPlaces());
 });
+
 app.get("/google-maps-api", (req, res) => {
 	request("https://maps.googleapis.com/maps/api/js?key=" + googleApiKey + "&callback=initMap", (err, full, body) => {
 		res.send(body);

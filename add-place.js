@@ -11,7 +11,7 @@ prompt.colors = false;
 prompt.start();
 
 var startSearch = () => { 
-	prompt.get({ name: "term", description: "Search term (or quit/q)" }, function(err, result) {
+	prompt.get({ name: "term", description: "Search term (or quit/q)" }, (err, result) => {
 		if (err) {
 			console.log(err);
 			return;
@@ -29,7 +29,7 @@ var startSearch = () => {
 };
 
 var doSearch = (searchTerm) => {
-	request("https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(searchTerm) + "&key=" + googleApiKey, function(err, res, body) {
+	request("https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(searchTerm) + "&key=" + googleApiKey, (err, res, body) => {
 		if (err) {
 			console.log("Error: " + err);
 			return;
