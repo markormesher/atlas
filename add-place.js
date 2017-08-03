@@ -6,97 +6,134 @@ const Storage = require("node-storage");
 const SECRETS = require("./secrets.json");
 const googleApiKey = SECRETS["google_api_key"];
 
+prompt.message = "";
+prompt.colors = false;
 prompt.start();
 
-var getSearchTerm = function() { 
-	prompt.get("Search term", function(err, result) {
+var startSearch = () => { 
+	prompt.get({ name: "term", description: "Search term (or quit/q)" }, function(err, result) {
 		if (err) {
 			console.log(err);
 			return;
 		}
 
-		if (!result["Search term"] || result["Search term"] == "") {
-			getSearchTerm();
+		var term = result["term"].toLowerCase();
+		if (result["term"] === "") {
+			startSearch();
+		} else if (result["term"] === "quit" || result["term"] === "q") {
+			console.log("Bye!");
 		} else {
-			doSearch(result["Search term"]);
+			doSearch(result["term"]);
 		}
 	});
 };
 
-var doSearch = function(searchTerm) {
+var doSearch = (searchTerm) => {
 	request("https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(searchTerm) + "&key=" + googleApiKey, function(err, res, body) {
 		if (err) {
 			console.log("Error: " + err);
+			return;
+		}
+
+		var raw = JSON.parse(body);
+		if (raw["status"] !== "OK") {
+			console.log("Reply status: " + raw["status"]);
+			startSearch();
 		} else {
-			var raw = JSON.parse(body);
-			if (raw["status"] !== "OK") {
-				console.log("Reply status: " + raw["status"]);
-			} else if (raw["results"].length === 0) {
-				console.log("No results");
-			} else {
-				parsePlace(raw["results"][0]);
-			}
+			parsePlaces(raw["results"]);
 		}
 	});
 };
 
-var parsePlace = function(result) {
-	var place = {};
+var parsePlaces = (results) => {
+	var options = [];
 
-	place["lat"] = result["geometry"]["location"]["lat"];
-	place["lon"] = result["geometry"]["location"]["lng"];
-
-	var locality = null;
-	var country = null;
-	for (var i = 0; i < result["address_components"].length; ++i) {
-		var name = result["address_components"][i];
-		if (name["types"].indexOf("locality") >= 0) {
-			locality = name["long_name"];
+	for (var i = 0; i < results.length; ++i) {
+		var result = results[i];
+		var lat = result["geometry"]["location"]["lat"];
+		var lon = result["geometry"]["location"]["lng"];
+		var country;
+		for (var j = 0; j < result["address_components"].length; ++j) {
+			var component = result["address_components"][j];
+			if (component["types"].indexOf("country") >= 0) {
+				country = component["long_name"];
+				break;
+			}
 		}
-		if (name["types"].indexOf("country") >= 0) {
-			country = name["long_name"];
+		if (!country) {
+			continue;
+		}
+
+		var targets = ["locality", "administrative_area_level_1", "administrative_area_level_2", "colloquial_area", "establishment"];
+
+		for (var j = 0; j < result["address_components"].length; ++j) {
+			var component = result["address_components"][j];
+			for (var k = 0; k < targets.length; ++k) {
+				if (component["types"].indexOf(targets[k]) >= 0) {
+					var option = {
+						lat: lat,
+						lon: lon,
+						country: country,
+						name: component["long_name"]
+					};
+					options.push(option);
+				}
+			}
 		}
 	}
 
-	place["locality"] = locality;
-	place["country"] = country;
+	choosePlace(options);
+};
 
-	if (isNaN(place["lat"]) || isNaN(place["lon"]) || !locality || !country) {
-		console.log("Error: place was not fully defined.");
-		console.log(place);
+var choosePlace = (options) => {
+	if (options.length === 0) {
+		console.log("No places found!");
+		startSearch();
 	} else {
-		savePlace(place);
+		console.log("Select a place to add:");
+		console.log("0) Search again");
+		for (var i = 0; i < options.length; ++i) {
+			console.log((i + 1) + ") " + options[i]["name"] + ", " + options[i]["country"] + " @ " + options[i]["lat"] + ", " + options[i]["lon"]);
+		}
+		prompt.get({ name: "selection", description: "Choose place" }, (err, result) => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+
+			var selection = parseInt(result["selection"]) - 1;
+			if (selection === -1) {
+				startSearch();
+			} else if (options[selection]) {
+				savePlace(options[selection]);
+			} else {
+				console.log("Please select a valid option!");
+				choosePlace(options);
+			}
+		});
 	}
 };
 
-var savePlace = function(place) {
-	console.log("Saving " + place["locality"] + ", " + place["country"] + " @ " + place["lat"] + ", " + place["lon"]);
-	console.log("Is this right?");
-	prompt.get("yes/no", function(err, result) {
-		if (err) {
-			console.log(err);
-		} else if (result["yes/no"] === "yes") {
-			const store = new Storage(path.join(__dirname, "data/places"));
-			var places = store.get("places");
-			if (!places) {
-				places = [];
-			}
-			if (placeIsDuplicate(place, places)) {
-				console.log("This place has already been added!");
-			} else {
-				places.push(place);
-				store.put("places", places);
-				console.log("Done!");
-			}
-		} else {
-			getSearchTerm();
-		}
-	});
+var savePlace = (place) => {
+	const store = new Storage(path.join(__dirname, "data/places"));
+	var places = store.get("places");
+	if (!places) {
+		places = [];
+	}
+
+	if (placeIsDuplicate(place, places)) {
+		console.log("This place has already been added!");
+	} else {
+		places.push(place);
+		store.put("places", places);
+		console.log("Added!");
+	}
+	startSearch();
 };
 
-var placeIsDuplicate = function(place, places) {
+var placeIsDuplicate = (place, places) => {
 	for (var i = 0; i < places.length; ++i) {
-		if (place["locality"] === places[i]["locality"]
+		if (place["name"] === places[i]["name"]
 			&& place["country"] === places[i]["country"]) {
 			return true;
 		}
@@ -104,4 +141,4 @@ var placeIsDuplicate = function(place, places) {
 	return false;
 };
 
-getSearchTerm();
+startSearch();
