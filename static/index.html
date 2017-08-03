@@ -12,11 +12,24 @@
 				height: 100%;
 				min-height: 100%;
 			}
+
+			#overlay {
+				position: absolute;
+				top: 0;
+				right: 0;
+				background: #ffffff;
+				padding: 8px 14px;
+				font-size: 12px;
+				font-family: sans-serif;
+				color: #000000;
+				opacity: 0.4;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="map"></div>
+		<div id="overlay"></div>
 		<script src="/map.js"></script> 
 		<script src="/google-maps-api"></script> 
 	</body>

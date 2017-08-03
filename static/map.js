@@ -18,7 +18,12 @@ function initMap() {
 }
 
 function addPlaces(map, places) {
+	var countries = [];
+
 	for (var i = 0; i < places.length; ++i) {
+		if (countries.indexOf(places[i]["country"]) === -1) {
+			countries.push(places[i]["country"]);
+		}
 		new google.maps.Marker({
 			map: map,
 			position: {
@@ -27,4 +32,6 @@ function addPlaces(map, places) {
 			}
 		});
 	}
+	
+	document.getElementById("overlay").innerHTML = places.length + " places in " + countries.length + " countries";
 };
