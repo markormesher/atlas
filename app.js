@@ -3,6 +3,7 @@ const express = require("express");
 const request = require("request");
 const getPlaces = require("./get-places");
 
+const CONSTANTS = require("./constants.json");
 const SECRETS = require("./secrets.json");
 const googleApiKey = SECRETS["google_api_key"];
 
@@ -20,6 +21,6 @@ app.get("/google-maps-api", (req, res) => {
 	});
 });
 
-app.listen(3003, () => {
-	console.log("Listening on port 3003");
+app.listen(CONSTANTS["port"], () => {
+	console.log("Listening on port " + CONSTANTS["port"]);
 });
