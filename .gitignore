@@ -1,3 +1,11 @@
 secrets.json
 node_modules
-data
+data/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Linux
+*~
+.Trash-*/
