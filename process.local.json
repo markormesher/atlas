@@ -1,9 +1,0 @@
-{
-	"apps": [
-		{
-			"name": "atlas",
-			"cwd": ".",
-			"script": "./app.js"
-		}
-	]
-}

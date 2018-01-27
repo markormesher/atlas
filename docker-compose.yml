@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  app:
+    build: ./app
+    restart: always
+    secrets:
+      - google.api.key
+    environment:
+      - ENV=dev
+    volumes:
+      - data:/data
+    ports:
+      - "3004:3000"
+
+volumes:
+  data:
+
+secrets:
+  google.api.key:
+    file: ./secrets/google.api.key

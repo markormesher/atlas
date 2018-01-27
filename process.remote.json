@@ -1,9 +1,0 @@
-{
-	"apps": [
-		{
-			"name": "atlas",
-			"cwd": "/var/node/atlas.markormesher.co.uk/",
-			"script": "./app.js"
-		}
-	]
-}

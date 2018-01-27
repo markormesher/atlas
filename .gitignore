@@ -1,11 +1,11 @@
-secrets.json
-node_modules
-data/
+secrets
+!.gitkeep
 
 # IntelliJ
-.idea/
 *.iml
+.idea/
+
 
 # Linux
 *~
-.Trash-*/
+.Trash-*
