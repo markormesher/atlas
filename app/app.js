@@ -1,20 +1,36 @@
 const path = require('path');
-const express = require('express');
+const Express = require('express');
 const request = require('request');
-const Storage = require('node-storage');
-const configLoader = require('./helpers/config-loader');
+const Sequelize = require('sequelize');
+const SequelizeDb = require('./helpers/db');
+const ConfigLoader = require('./helpers/config-loader');
 
-const googleApiKey = configLoader.getSecret('google.api.key');
-const placeStore = new Storage('/data/places');
+// db
 
-const app = express();
+const Place = SequelizeDb.define('place', {
+	name: Sequelize.STRING,
+	country: Sequelize.STRING,
+	lat: Sequelize.DOUBLE,
+	lon: Sequelize.DOUBLE
+});
 
-app.use(express.static(path.join(__dirname, 'static')));
+SequelizeDb.sync().then(() => {
+	console.log('Database models synced successfully');
+}).catch(err => {
+	console.log('Failed to sync database models');
+	console.log(err);
+});
 
-app.get('/places', (req, res) => res.json(placeStore.get('places') || []));
+// app
+
+const app = Express();
+
+app.use(Express.static(path.join(__dirname, 'static')));
+
+app.get('/places', (req, res, next) => Place.findAll().then((places) => res.json(places)).catch(next));
 
 app.get('/google-maps-api', (req, res) => {
-	request('https://maps.googleapis.com/maps/api/js?key=' + googleApiKey + '&callback=initMap', (err, full, body) => {
+	request('https://maps.googleapis.com/maps/api/js?key=' + ConfigLoader.getSecret('google.api.key') + '&callback=initMap', (err, full, body) => {
 		res.send(body);
 	});
 });

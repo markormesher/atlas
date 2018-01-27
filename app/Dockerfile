@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 # dependencies
 COPY package.json ./
 RUN npm i
+RUN git clone https://github.com/vishnubob/wait-for-it.git
 
 # source code
 COPY . .

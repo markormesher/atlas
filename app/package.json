@@ -18,8 +18,9 @@
   "homepage": "https://github.com/markormesher/atlas#readme",
   "dependencies": {
     "express": "^4.15.3",
-    "node-storage": "0.0.7",
+    "pg": "^7.4.1",
     "prompt": "^1.0.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "sequelize": "^4.32.2"
   }
 }

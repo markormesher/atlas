@@ -1,10 +1,9 @@
-secrets
-!.gitkeep
+secrets/**
+!secrets/.gitkeep
 
 # IntelliJ
 *.iml
 .idea/
-
 
 # Linux
 *~
