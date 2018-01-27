@@ -11,7 +11,7 @@ services:
     volumes:
       - data:/data
     ports:
-      - "3004:3000"
+      - "3003:3000"
 
 volumes:
   data:
