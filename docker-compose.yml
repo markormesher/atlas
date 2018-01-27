@@ -11,8 +11,6 @@ services:
       - postgres.password
     environment:
       - ENV=dev
-    volumes:
-      - data:/data
     ports:
       - "3003:3000"
     command: ["./wait-for-it/wait-for-it.sh", "postgres:5432", "--timeout=30", "--strict", "--", "node", "./app.js"]
@@ -28,7 +26,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  data:
   postgres-data:
 
 secrets:
