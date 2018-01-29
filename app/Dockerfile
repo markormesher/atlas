@@ -3,9 +3,9 @@ FROM node:carbon
 WORKDIR /usr/src/app
 
 # dependencies
-COPY package.json ./
+COPY package.json .npmrc ./
 RUN npm i
-RUN git clone https://github.com/vishnubob/wait-for-it.git
+RUN git -c http.sslVerify=false clone https://github.com/vishnubob/wait-for-it.git
 
 # source code
 COPY . .

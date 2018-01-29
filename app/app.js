@@ -27,7 +27,7 @@ const app = Express();
 
 app.use(Express.static(path.join(__dirname, 'static')));
 
-app.get('/places', (req, res, next) => Place.findAll().then((places) => res.json(places)).catch(next));
+app.get('/places', (req, res, next) => Place.findAll().then(places => res.json(places)).catch(next));
 
 app.get('/google-maps-api', (req, res) => {
 	request('https://maps.googleapis.com/maps/api/js?key=' + ConfigLoader.getSecret('google.api.key') + '&callback=initMap', (err, full, body) => {
