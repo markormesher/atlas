@@ -10,10 +10,10 @@ services:
       - google.api.key
       - postgres.password
     environment:
-      - ENV=dev
+      - ENV=prod
     ports:
       - "3003:3000"
-    command: ["./wait-for-it/wait-for-it.sh", "postgres:5432", "--timeout=30", "--strict", "--", "node", "./app.js"]
+    command: ["./entry-point.sh"]
 
   postgres:
     image: postgres:10.1-alpine

@@ -12,4 +12,4 @@ COPY . .
 
 # run
 EXPOSE 3000
-CMD ["node", "./app.js"]
+CMD ["node", "./src/app.js"]
