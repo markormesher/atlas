@@ -1,0 +1,39 @@
+-
+	places = places || [];
+	places = places.sort((a, b) => (a.country + "/" + a.name).localeCompare(b.country + "/" + b.name));
+
+html
+	head
+		link(rel = "stylesheet", type = "text/css", href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "/edit.css")
+		meta(name = "viewport", content = "width=device-width, initial-scale=1, shrink-to-fit=no")
+		title Atlas - Edit
+
+	body
+		div.container
+			h1 #[a(href = "/") Atlas] - Editor
+
+			h3 Add a New Entry
+			form(method = "post", action = "/edit/create/" + editKey)
+				div.row
+					div.col-md-3.col-sm-6.form-group
+						input.form-control(name = "name", placeholder = "Name")
+					div.col-md-3.col-sm-6.form-group
+						input.form-control(name = "country", placeholder = "Country")
+					div.col-md-3.col-sm-6.form-group
+						input.form-control(name = "lat", placeholder = "Lat")
+					div.col-md-3.col-sm-6.form-group
+						input.form-control(name = "lon", placeholder = "Lon")
+				div.row
+					div.col-md-3.col-sm-6.form-group
+						button.btn.btn-success(type = "submit") Submit
+
+			h3 Current Entries
+
+			table.table
+				each place in places
+					tr
+						td= place.country
+						td= place.name
+						td= place.lat + ", " + place.lon
+						td: a(href = "/edit/delete/" + editKey + "/" + place.id) Delete
