@@ -5,30 +5,36 @@ services:
     build: .
     restart: always
     depends_on:
-      - postgres
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DATABASE=atlas
+      - POSTGRES_USER=atlas
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-password.txt
+      - GOOGLE_API_KEY_FILE=/run/secrets/google-api-key.txt
     ports:
       - 3000
     secrets:
-      - google.api.key
-      - postgres.password
+      - google-api-key
+      - postgres-password
 
-  postgres:
+  db:
     image: postgres:10.1-alpine
     restart: always
     environment:
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres.password
-    networks:
-      - internal
+      - POSTGRES_DATABASE=atlas
+      - POSTGRES_USER=atlas
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-password
     volumes:
       - postgres-data:/var/lib/postgresql/data
     secrets:
-      - postgres.password
+      - postgres-password
 
 volumes:
   postgres-data:
 
 secrets:
-  google.api.key:
-    file: ./secrets/google.api.key
-  postgres.password:
-    file: ./secrets/postgres.password
+  google-api-key:
+    file: ./secrets/google-api-key.txt
+  postgres-password:
+    file: ./secrets/postgres-password.txt

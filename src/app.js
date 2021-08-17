@@ -43,13 +43,13 @@ app.get("/", (req, res) => {
 app.get("/places", (req, res, next) => {
 	Place.findAll()
 			.then(places => res.json(places))
-			.catch(next);
+			.catch(res.status(500).end());
 });
 
 app.get(`/edit/${editKey}`, (req, res, next) => {
 	Place.findAll()
 			.then(places => res.render("edit", { editKey, places }))
-			.catch(next);
+			.catch(res.status(500).end());
 });
 
 app.post(`/edit/create/${editKey}`, (req, res, next) => {
@@ -60,18 +60,18 @@ app.post(`/edit/create/${editKey}`, (req, res, next) => {
 
 	Place.create({ name, country, lat, lon })
 			.then(() => res.redirect(`/edit/${editKey}`))
-			.catch(next);
+			.catch(res.status(500).end());
 });
 
 app.get(`/edit/delete/${editKey}/:placeId`, (req, res, next) => {
 	const placeId = req.params["placeId"];
 	Place.destroy({ where: { id: placeId } })
 			.then(() => res.redirect(`/edit/${editKey}`))
-			.catch(next);
+			.catch(res.status(500).end());
 });
 
 app.get("/google-maps-api", (req, res) => {
-	const apiKey = ConfigLoader.getSecret("google.api.key");
+	const apiKey = ConfigLoader.getSecret("GOOGLE_API_KEY_FILE");
 	Request(`https://maps.googleapis.com/maps/api/js?callback=initMap&key=${apiKey}`, (err, full, body) => {
 		res.send(body);
 	});

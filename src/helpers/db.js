@@ -2,10 +2,10 @@ const Sequelize = require("sequelize");
 const ConfigLoader = require("./config-loader");
 
 const sequelize = new Sequelize({
-	host: "postgres",
-	username: "postgres",
-	password: ConfigLoader.getSecret("postgres.password"),
-	database: "postgres",
+	host: ConfigLoader.getEnv("POSTGRES_HOST"),
+	username: ConfigLoader.getEnv("POSTGRES_USER"),
+	password: ConfigLoader.getSecret("POSTGRES_PASSWORD_FILE"),
+	database: ConfigLoader.getEnv("POSTGRES_DATABASE"),
 	dialect: "postgres",
 	pool: {
 		max: 5,
@@ -14,7 +14,6 @@ const sequelize = new Sequelize({
 		idle: 10000
 	},
 	operatorsAliases: false,
-	logging: () => {}
 });
 
 module.exports = sequelize;
