@@ -2,28 +2,15 @@ version: '3.3'
 
 services:
   app:
-    build: ./app
+    build: .
     restart: always
     depends_on:
       - postgres
-    environment:
-      - ENV=prod
-    networks:
-      - traefik
-      - internal
     ports:
       - 3000
     secrets:
       - google.api.key
       - postgres.password
-    command:
-      - ./entry-point.sh
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=traefik_default
-      - traefik.http.routers.atlas.rule=Host(`atlas.markormesher.co.uk`, `www.atlas.markormesher.co.uk`)
-      - traefik.http.routers.atlas.middlewares=strip-www@file
-      - traefik.http.routers.atlas.tls.certresolver=letsencrypt
 
   postgres:
     image: postgres:10.1-alpine
@@ -36,13 +23,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
     secrets:
       - postgres.password
-
-networks:
-  internal:
-    external: false
-  traefik:
-    external:
-      name: traefik_default
 
 volumes:
   postgres-data:

@@ -7,9 +7,7 @@ const Sequelize = require("sequelize");
 const SequelizeDb = require("./helpers/db");
 const ConfigLoader = require("./helpers/config-loader");
 
-// editing secret
-
-const editKey = process.env.ENV === "dev" ? "dev" : uuid.v4().replace(/-/g, "");
+const editKey = uuid.v4().replace(/-/g, "");
 
 // db
 

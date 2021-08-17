@@ -1,10 +1,1 @@
-secrets/**
-!secrets/.gitkeep
-
-# IntelliJ
-*.iml
-.idea/
-
-# Linux
-*~
-.Trash-*
+node_modules/
