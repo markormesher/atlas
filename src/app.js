@@ -27,6 +27,11 @@ SequelizeDb.sync().then(() => {
 
 // app
 
+const handleError = (err, res) => {
+	console.log("Error", err);
+	res.status(500).end();
+};
+
 const app = Express();
 
 app.use(BodyParser.urlencoded({ extended: false }));
@@ -43,13 +48,13 @@ app.get("/", (req, res) => {
 app.get("/places", (req, res, next) => {
 	Place.findAll()
 			.then(places => res.json(places))
-			.catch(res.status(500).end());
+			.catch((err) => handleError(err, res));
 });
 
 app.get(`/edit/${editKey}`, (req, res, next) => {
 	Place.findAll()
 			.then(places => res.render("edit", { editKey, places }))
-			.catch(res.status(500).end());
+			.catch((err) => handleError(err, res));
 });
 
 app.post(`/edit/create/${editKey}`, (req, res, next) => {
@@ -60,14 +65,14 @@ app.post(`/edit/create/${editKey}`, (req, res, next) => {
 
 	Place.create({ name, country, lat, lon })
 			.then(() => res.redirect(`/edit/${editKey}`))
-			.catch(res.status(500).end());
+			.catch((err) => handleError(err, res));
 });
 
 app.get(`/edit/delete/${editKey}/:placeId`, (req, res, next) => {
 	const placeId = req.params["placeId"];
 	Place.destroy({ where: { id: placeId } })
 			.then(() => res.redirect(`/edit/${editKey}`))
-			.catch(res.status(500).end());
+			.catch((err) => handleError(err, res));
 });
 
 app.get("/google-maps-api", (req, res) => {

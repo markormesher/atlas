@@ -7,12 +7,6 @@ const sequelize = new Sequelize({
 	password: ConfigLoader.getSecret("POSTGRES_PASSWORD_FILE"),
 	database: ConfigLoader.getEnv("POSTGRES_DATABASE"),
 	dialect: "postgres",
-	pool: {
-		max: 5,
-		min: 0,
-		acquire: 30000,
-		idle: 10000
-	},
 	operatorsAliases: false,
 });
 
