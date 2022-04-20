@@ -1,4 +1,4 @@
-FROM node:fermium
+FROM node:16.14.2-slim
 WORKDIR /atlas
 COPY package.json yarn.lock ./
 RUN yarn install
