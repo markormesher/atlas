@@ -14,7 +14,7 @@ html
 			h1 #[a(href = "/") Atlas] - Editor
 
 			h3 Add a New Entry
-			form(method = "post", action = "/edit/create/" + editKey)
+			form(method = "post", action = "/edit/create/")
 				div.row
 					div.col-md-3.col-sm-6.form-group
 						input.form-control(name = "name", placeholder = "Name")
@@ -36,4 +36,4 @@ html
 						td= place.country
 						td= place.name
 						td= place.lat + ", " + place.lon
-						td: a(href = "/edit/delete/" + editKey + "/" + place.id) Delete
+						td: a(href = "/edit/delete/" + place.id) Delete
