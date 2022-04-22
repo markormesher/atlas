@@ -8,8 +8,11 @@ const Sequelize = require("sequelize");
 const SequelizeDb = require("./helpers/db");
 const ConfigLoader = require("./helpers/config-loader");
 
-const adminPassword = uuid.v4().replace(/-/g, "");
-console.log(`Randomly generated admin password: ${adminPassword}`);
+let adminPassword = ConfigLoader.getSecret("ADMIN_PASSWORD_FILE");
+if (!adminPassword) {
+  adminPassword = uuid.v4().replace(/-/g, "");
+  console.log(`Randomly generated admin password: ${adminPassword}`);
+}
 
 const authMiddleware = ExpressBasicAuth({
   users: { admin: adminPassword },
