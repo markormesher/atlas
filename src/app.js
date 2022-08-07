@@ -93,7 +93,11 @@ app.get("/google-maps-api", (req, res) => {
   Request(
     `https://maps.googleapis.com/maps/api/js?callback=initMap&key=${apiKey}`,
     (err, full, body) => {
-      res.send(body);
+      if (err) {
+        handleError(err, res);
+      } else {
+        res.send(body);
+      }
     }
   );
 });
