@@ -1,10 +1,12 @@
 html
 	head
 		link(rel = "stylesheet", type = "text/css", href = "/style.css")
+		link(rel = "stylesheet", type = "text/css", href = "https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
 		title Atlas
 
 	body
 		div#map
 		div#overlay
+		script(src = "https://unpkg.com/axios/dist/axios.min.js")
+		script(src = "https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
 		script(src = "/map.js")
-		script(src = "/google-maps-api")

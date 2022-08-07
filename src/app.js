@@ -3,7 +3,6 @@ const uuid = require("uuid");
 const Express = require("express");
 const ExpressBasicAuth = require("express-basic-auth");
 const BodyParser = require("body-parser");
-const Request = require("request");
 const Sequelize = require("sequelize");
 const SequelizeDb = require("./helpers/db");
 const ConfigLoader = require("./helpers/config-loader");
@@ -64,6 +63,10 @@ app.get("/places", (req, res, next) => {
     .catch((err) => handleError(err, res));
 });
 
+app.get(`/mapbox-token`, (req, res, next) => {
+  res.send(ConfigLoader.getSecret("MAPBOX_TOKEN_FILE"));
+});
+
 app.get(`/edit`, authMiddleware, (req, res, next) => {
   Place.findAll()
     .then((places) => res.render("edit", { places }))
@@ -86,20 +89,6 @@ app.get(`/edit/delete/:placeId`, authMiddleware, (req, res, next) => {
   Place.destroy({ where: { id: placeId } })
     .then(() => res.redirect(`/edit`))
     .catch((err) => handleError(err, res));
-});
-
-app.get("/google-maps-api", (req, res) => {
-  const apiKey = ConfigLoader.getSecret("GOOGLE_API_KEY_FILE");
-  Request(
-    `https://maps.googleapis.com/maps/api/js?callback=initMap&key=${apiKey}`,
-    (err, full, body) => {
-      if (err) {
-        handleError(err, res);
-      } else {
-        res.send(body);
-      }
-    }
-  );
 });
 
 const server = app.listen(3000, () => console.log("Listening on port 3000"));

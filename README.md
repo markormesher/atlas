@@ -14,12 +14,12 @@ Places can be edited from `.../edit` on your install - the username is `admin` a
 
 All arguments are required if they do not have a default value listed below.
 
-- `ADMIN_PASSWORD_FILE` - location of a file containing the desired admin password (default: auto-generated password, logged on start up)
-- `GOOGLE_API_KEY_FILE` - Google API key for loading map tiles
 - `POSTGRES_HOST` - Postgres host
 - `POSTGRES_DATABASE` - Postgres database name
 - `POSTGRES_USER` - Postgres username
 - `POSTGRES_PASSWORD_FILE` - location of a file containing the Postgres password
+- `ADMIN_PASSWORD_FILE` - location of a file containing the desired admin password (default: auto-generated password, logged on start up)
+- `MAPBOX_TOKEN_FILE` - Mapbox API token for loading map tiles
 
 ## Quick-Start Docker-Compose Example
 
@@ -34,16 +34,16 @@ services:
     posts:
       - 3000:3000
     secrets:
-      - admin-password
-      - google-api-key
       - postgres-password
+      - admin-password
+      - mapbox-token
     environment:
-      - ADMIN_PASSWORD_FILE=/run/secrets/admin-password
-      - GOOGLE_API_KEY_FILE=/run/secrets/google-api-key
       - POSTGRES_HOST=atlas-postgres
       - POSTGRES_USER=atlas
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-password
       - POSTGRES_DATABASE=atlas
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin-password
+      - MAPBOX_TOKEN_FILE=/run/secrets/mapbox-token
 
   atlas-postgres:
     image: postgres:10.1-alpine
@@ -60,10 +60,10 @@ volumes:
   postgres-data:
 
 secrets:
-  admin-password:
-    file: ./secrets/admin-password.txt
-  google-api-key:
-    file: ./secrets/google-api-key.txt
   postgres-password:
     file: ./secrets/postgres-password.txt
+  admin-password:
+    file: ./secrets/admin-password.txt
+  mapbox-token:
+    file: ./secrets/mapbox-token.txt
 ```

@@ -1,37 +1,31 @@
-function initMap() {
-	const map = new google.maps.Map(document.getElementById("map"), {
-		zoom: 2,
-		center: {
-			lat: 39,
-			lng: 34
-		}
-	});
+async function init() {
+  const token = (await axios.get("/mapbox-token")).data;
 
-	const http = new XMLHttpRequest();
-	http.onreadystatechange = () => {
-		if (http.readyState === 4 && http.status === 200) {
-			addPlaces(map, JSON.parse(http.responseText));
-		}
-	};
-	http.open("GET", "/places", true);
-	http.send(null);
+  const map = L.map("map", {
+    center: [39, 34],
+    zoom: 2,
+  });
+
+  L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+    {
+      id: "mapbox/streets-v11",
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+      zoomOffset: -1,
+      tileSize: 512,
+      accessToken: token,
+    }
+  ).addTo(map);
+
+  const places = (await axios.get("/places")).data;
+  for (let place of places) {
+    L.marker([place.lat, place.lon]).addTo(map);
+  }
+
+  const countryCount = new Set([...places.map((p) => p.country)]).size;
+  document.getElementById("overlay").innerHTML =
+    places.length + " places in " + countryCount + " countries";
 }
 
-function addPlaces(map, places) {
-	const countries = [];
-
-	for (let i = 0; i < places.length; ++i) {
-		if (countries.indexOf(places[i]["country"]) === -1) {
-			countries.push(places[i]["country"]);
-		}
-		new google.maps.Marker({
-			map: map,
-			position: {
-				lat: places[i]["lat"],
-				lng: places[i]["lon"]
-			}
-		});
-	}
-
-	document.getElementById("overlay").innerHTML = places.length + " places in " + countries.length + " countries";
-}
+init();
