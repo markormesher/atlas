@@ -9,6 +9,6 @@
     "express-basic-auth": "^1.2.1",
     "pg": "8.0.3",
     "pug": "^3.0.1",
-    "sequelize": "^4.32.2"
+    "sequelize": "^6.0.0"
   }
 }
