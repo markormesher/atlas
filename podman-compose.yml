@@ -1,0 +1,25 @@
+version: 3.7
+
+services:
+  atlas:
+    build:
+      context: "."
+      dockerfile: "Containerfile"
+    restart: "always"
+    environment:
+      - "POSTGRES_CONNECTION_STRING=postgresql://atlas:atlas@postgres/atlas"
+      - "ADMIN_PASSWORD=foobar"
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: "docker.io/library/postgres:17.2"
+    environment:
+      - "POSTGRES_DATABASE=atlas"
+      - "POSTGRES_USER=atlas"
+      - "POSTGRES_PASSWORD=atlas"
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data"
+
+volumes:
+  postgres-data: {}

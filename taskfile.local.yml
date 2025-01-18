@@ -1,0 +1,25 @@
+version: "3"
+
+tasks:
+  tool-install:
+    cmds:
+      # protobuf
+      - go install github.com/bufbuild/buf/cmd/buf@latest
+      - go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      - go install connectrpc.com/connect/cmd/protoc-gen-connect-go@latest
+
+      # sqlc
+      - go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+    status:
+      # protobuf
+      - which buf
+      - which protoc-gen-go
+      - which protoc-gen-connect-go
+
+      # sqlc
+      - which sqlc
+
+  dev:
+    cmds:
+      - podman-compose build
+      - podman-compose --podman-run-args="--replace" up
