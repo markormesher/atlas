@@ -4,7 +4,6 @@ import (
 	"context"
 
 	atlasv1 "github.com/markormesher/atlas/internal/gen/atlas/v1"
-	"github.com/markormesher/atlas/internal/mapper"
 )
 
 func (c *Core) GetPlaces(ctx context.Context) ([]*atlasv1.Place, error) {
@@ -13,5 +12,5 @@ func (c *Core) GetPlaces(ctx context.Context) ([]*atlasv1.Place, error) {
 		return nil, err
 	}
 
-	return mapper.Map(places, mapper.DBPlaceToAPI), nil
+	return convertSlicePtr(places, convertPlaceDBToAPI), nil
 }

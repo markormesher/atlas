@@ -11,12 +11,12 @@ import (
 )
 
 type apiServer struct {
-	c *core.Core
+	core *core.Core
 }
 
-func NewApiServer(c *core.Core) *apiServer {
+func NewApiServer(core *core.Core) *apiServer {
 	return &apiServer{
-		c: c,
+		core: core,
 	}
 }
 
@@ -26,7 +26,7 @@ func (s *apiServer) ConfigureMux(mux *http.ServeMux) {
 }
 
 func (s *apiServer) GetPlaces(ctx context.Context, req *connect.Request[atlasv1.GetPlacesRequest]) (*connect.Response[atlasv1.GetPlacesResponse], error) {
-	places, err := s.c.GetPlaces(ctx)
+	places, err := s.core.GetPlaces(ctx)
 	if err != nil {
 		return nil, err
 	}
