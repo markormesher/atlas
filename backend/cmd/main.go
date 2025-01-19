@@ -33,11 +33,21 @@ func main() {
 	}
 	defer pool.Close()
 
+	l.Info("checking database connectivity")
 	err = pool.Ping(context.Background())
 	if err != nil {
 		l.Error("failed to connect to database", "error", err)
 		os.Exit(1)
 	}
+	l.Info("database connectivity okay")
+
+	l.Info("migrating database")
+	err = db.Migrate(context.Background(), pool, "/app/sql/migrations")
+	if err != nil {
+		l.Error("failed to mirgate database", "error", err)
+		os.Exit(1)
+	}
+	l.Info("database migration completed")
 
 	// core logic
 	core := core.Core{
