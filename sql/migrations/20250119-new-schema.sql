@@ -29,3 +29,4 @@ INSERT INTO places_tmp (
 -- swap tables
 DROP TABLE places;
 ALTER TABLE places_tmp RENAME TO places;
+ALTER INDEX places_tmp_pkey RENAME TO places_pkey;
