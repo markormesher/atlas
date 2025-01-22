@@ -1,5 +1,10 @@
 @use "@picocss/pico";
 
+// fix leaflet/pico conflict
+.leaflet-control > a[role=button] {
+  padding: 0;
+}
+
 #map {
   width: 100%;
   height: 100vh;
@@ -17,7 +22,11 @@
   font-size: 0.8rem;
 }
 
-// fix leaflet/pico conflict
-.leaflet-control > a[role=button] {
-  padding: 0;
+.editor-wrapper {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+td input {
+  margin-bottom: 0 !important;
 }

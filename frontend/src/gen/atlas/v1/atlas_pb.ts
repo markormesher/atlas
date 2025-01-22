@@ -10,7 +10,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file atlas/v1/atlas.proto.
  */
 export const file_atlas_v1_atlas: GenFile = /*@__PURE__*/
-  fileDesc("ChRhdGxhcy92MS9hdGxhcy5wcm90bxIIYXRsYXMudjEiTAoFUGxhY2USCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIPCgdjb3VudHJ5GAMgASgJEgsKA2xhdBgEIAEoARILCgNsb24YBSABKAEiEgoQR2V0UGxhY2VzUmVxdWVzdCI0ChFHZXRQbGFjZXNSZXNwb25zZRIfCgZwbGFjZXMYASADKAsyDy5hdGxhcy52MS5QbGFjZTJUCgxBdGxhc1NlcnZpY2USRAoJR2V0UGxhY2VzEhouYXRsYXMudjEuR2V0UGxhY2VzUmVxdWVzdBobLmF0bGFzLnYxLkdldFBsYWNlc1Jlc3BvbnNlQj1aO2dpdGh1Yi5jb20vbWFya29ybWVzaGVyL2F0bGFzL2ludGVybmFsL2dlbi9hdGxhcy92MTthdGxhc3YxYgZwcm90bzM");
+  fileDesc("ChRhdGxhcy92MS9hdGxhcy5wcm90bxIIYXRsYXMudjEiTAoFUGxhY2USCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIPCgdjb3VudHJ5GAMgASgJEgsKA2xhdBgEIAEoARILCgNsb24YBSABKAEiEgoQR2V0UGxhY2VzUmVxdWVzdCI0ChFHZXRQbGFjZXNSZXNwb25zZRIfCgZwbGFjZXMYASADKAsyDy5hdGxhcy52MS5QbGFjZSISChBBdXRoQ2hlY2tSZXF1ZXN0IhMKEUF1dGhDaGVja1Jlc3BvbnNlMpoBCgxBdGxhc1NlcnZpY2USRAoJR2V0UGxhY2VzEhouYXRsYXMudjEuR2V0UGxhY2VzUmVxdWVzdBobLmF0bGFzLnYxLkdldFBsYWNlc1Jlc3BvbnNlEkQKCUF1dGhDaGVjaxIaLmF0bGFzLnYxLkF1dGhDaGVja1JlcXVlc3QaGy5hdGxhcy52MS5BdXRoQ2hlY2tSZXNwb25zZUI9WjtnaXRodWIuY29tL21hcmtvcm1lc2hlci9hdGxhcy9pbnRlcm5hbC9nZW4vYXRsYXMvdjE7YXRsYXN2MWIGcHJvdG8z");
 
 /**
  * @generated from message atlas.v1.Place
@@ -80,6 +80,32 @@ export const GetPlacesResponseSchema: GenMessage<GetPlacesResponse> = /*@__PURE_
   messageDesc(file_atlas_v1_atlas, 2);
 
 /**
+ * @generated from message atlas.v1.AuthCheckRequest
+ */
+export type AuthCheckRequest = Message<"atlas.v1.AuthCheckRequest"> & {
+};
+
+/**
+ * Describes the message atlas.v1.AuthCheckRequest.
+ * Use `create(AuthCheckRequestSchema)` to create a new message.
+ */
+export const AuthCheckRequestSchema: GenMessage<AuthCheckRequest> = /*@__PURE__*/
+  messageDesc(file_atlas_v1_atlas, 3);
+
+/**
+ * @generated from message atlas.v1.AuthCheckResponse
+ */
+export type AuthCheckResponse = Message<"atlas.v1.AuthCheckResponse"> & {
+};
+
+/**
+ * Describes the message atlas.v1.AuthCheckResponse.
+ * Use `create(AuthCheckResponseSchema)` to create a new message.
+ */
+export const AuthCheckResponseSchema: GenMessage<AuthCheckResponse> = /*@__PURE__*/
+  messageDesc(file_atlas_v1_atlas, 4);
+
+/**
  * @generated from service atlas.v1.AtlasService
  */
 export const AtlasService: GenService<{
@@ -90,6 +116,14 @@ export const AtlasService: GenService<{
     methodKind: "unary";
     input: typeof GetPlacesRequestSchema;
     output: typeof GetPlacesResponseSchema;
+  },
+  /**
+   * @generated from rpc atlas.v1.AtlasService.AuthCheck
+   */
+  authCheck: {
+    methodKind: "unary";
+    input: typeof AuthCheckRequestSchema;
+    output: typeof AuthCheckResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_atlas_v1_atlas, 0);

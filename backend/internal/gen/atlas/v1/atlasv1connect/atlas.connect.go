@@ -35,11 +35,14 @@ const (
 const (
 	// AtlasServiceGetPlacesProcedure is the fully-qualified name of the AtlasService's GetPlaces RPC.
 	AtlasServiceGetPlacesProcedure = "/atlas.v1.AtlasService/GetPlaces"
+	// AtlasServiceAuthCheckProcedure is the fully-qualified name of the AtlasService's AuthCheck RPC.
+	AtlasServiceAuthCheckProcedure = "/atlas.v1.AtlasService/AuthCheck"
 )
 
 // AtlasServiceClient is a client for the atlas.v1.AtlasService service.
 type AtlasServiceClient interface {
 	GetPlaces(context.Context, *connect.Request[v1.GetPlacesRequest]) (*connect.Response[v1.GetPlacesResponse], error)
+	AuthCheck(context.Context, *connect.Request[v1.AuthCheckRequest]) (*connect.Response[v1.AuthCheckResponse], error)
 }
 
 // NewAtlasServiceClient constructs a client for the atlas.v1.AtlasService service. By default, it
@@ -59,12 +62,19 @@ func NewAtlasServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(atlasServiceMethods.ByName("GetPlaces")),
 			connect.WithClientOptions(opts...),
 		),
+		authCheck: connect.NewClient[v1.AuthCheckRequest, v1.AuthCheckResponse](
+			httpClient,
+			baseURL+AtlasServiceAuthCheckProcedure,
+			connect.WithSchema(atlasServiceMethods.ByName("AuthCheck")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // atlasServiceClient implements AtlasServiceClient.
 type atlasServiceClient struct {
 	getPlaces *connect.Client[v1.GetPlacesRequest, v1.GetPlacesResponse]
+	authCheck *connect.Client[v1.AuthCheckRequest, v1.AuthCheckResponse]
 }
 
 // GetPlaces calls atlas.v1.AtlasService.GetPlaces.
@@ -72,9 +82,15 @@ func (c *atlasServiceClient) GetPlaces(ctx context.Context, req *connect.Request
 	return c.getPlaces.CallUnary(ctx, req)
 }
 
+// AuthCheck calls atlas.v1.AtlasService.AuthCheck.
+func (c *atlasServiceClient) AuthCheck(ctx context.Context, req *connect.Request[v1.AuthCheckRequest]) (*connect.Response[v1.AuthCheckResponse], error) {
+	return c.authCheck.CallUnary(ctx, req)
+}
+
 // AtlasServiceHandler is an implementation of the atlas.v1.AtlasService service.
 type AtlasServiceHandler interface {
 	GetPlaces(context.Context, *connect.Request[v1.GetPlacesRequest]) (*connect.Response[v1.GetPlacesResponse], error)
+	AuthCheck(context.Context, *connect.Request[v1.AuthCheckRequest]) (*connect.Response[v1.AuthCheckResponse], error)
 }
 
 // NewAtlasServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -90,10 +106,18 @@ func NewAtlasServiceHandler(svc AtlasServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(atlasServiceMethods.ByName("GetPlaces")),
 		connect.WithHandlerOptions(opts...),
 	)
+	atlasServiceAuthCheckHandler := connect.NewUnaryHandler(
+		AtlasServiceAuthCheckProcedure,
+		svc.AuthCheck,
+		connect.WithSchema(atlasServiceMethods.ByName("AuthCheck")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/atlas.v1.AtlasService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AtlasServiceGetPlacesProcedure:
 			atlasServiceGetPlacesHandler.ServeHTTP(w, r)
+		case AtlasServiceAuthCheckProcedure:
+			atlasServiceAuthCheckHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -105,4 +129,8 @@ type UnimplementedAtlasServiceHandler struct{}
 
 func (UnimplementedAtlasServiceHandler) GetPlaces(context.Context, *connect.Request[v1.GetPlacesRequest]) (*connect.Response[v1.GetPlacesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("atlas.v1.AtlasService.GetPlaces is not implemented"))
+}
+
+func (UnimplementedAtlasServiceHandler) AuthCheck(context.Context, *connect.Request[v1.AuthCheckRequest]) (*connect.Response[v1.AuthCheckResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("atlas.v1.AtlasService.AuthCheck is not implemented"))
 }

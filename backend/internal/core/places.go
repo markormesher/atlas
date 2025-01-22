@@ -7,7 +7,7 @@ import (
 )
 
 func (c *Core) GetPlaces(ctx context.Context) ([]*atlasv1.Place, error) {
-	places, err := c.Q.GetPlaces(ctx)
+	places, err := c.Queries.GetPlaces(ctx)
 	if err != nil {
 		return nil, err
 	}

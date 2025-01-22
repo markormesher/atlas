@@ -1,7 +1,11 @@
 package core
 
-import "github.com/markormesher/atlas/internal/db"
+import (
+	"github.com/markormesher/atlas/internal/config"
+	"github.com/markormesher/atlas/internal/db"
+)
 
 type Core struct {
-	Q db.Queries
+	Queries db.Queries
+	Config  config.Config
 }

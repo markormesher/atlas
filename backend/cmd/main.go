@@ -4,12 +4,16 @@ import (
 	"context"
 	"net/http"
 	"os"
+	"path"
+	"time"
 
+	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/markormesher/atlas/internal/api"
 	"github.com/markormesher/atlas/internal/config"
 	"github.com/markormesher/atlas/internal/core"
 	"github.com/markormesher/atlas/internal/db"
+	"github.com/markormesher/atlas/internal/gen/atlas/v1/atlasv1connect"
 	"github.com/markormesher/atlas/internal/logging"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -34,10 +38,20 @@ func main() {
 	defer pool.Close()
 
 	l.Info("checking database connectivity")
-	err = pool.Ping(context.Background())
-	if err != nil {
-		l.Error("failed to connect to database", "error", err)
-		os.Exit(1)
+	attemptsLeft := 5
+	for {
+		err = pool.Ping(context.Background())
+		if err != nil {
+			l.Error("failed to connect to database", "error", err)
+			if attemptsLeft > 0 {
+				l.Info("retrying in 2 seconds")
+				time.Sleep(time.Duration(2) * time.Second)
+			} else {
+				os.Exit(1)
+			}
+		}
+
+		break
 	}
 	l.Info("database connectivity okay")
 
@@ -51,14 +65,41 @@ func main() {
 
 	// core logic
 	core := core.Core{
-		Q: *db.New(pool),
+		Config:  cfg,
+		Queries: *db.New(pool),
 	}
 
-	// api + front end server
-	mux := http.NewServeMux()
+	// server setup
+	mux := mux.NewRouter()
 	apiServer := api.NewApiServer(&core)
-	apiServer.ConfigureMux(mux)
-	mux.Handle("/", http.FileServer(http.Dir(cfg.FrontendDistPath)))
+
+	// auth middleware
+	mux.Use(apiServer.AuthMiddleware)
+
+	// API server
+	apiPath, apiHandler := atlasv1connect.NewAtlasServiceHandler(apiServer)
+	mux.PathPrefix(apiPath).Handler(apiHandler)
+
+	// SPA frontend
+	mux.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		indexPath := path.Join(cfg.FrontendDistPath, "index.html")
+		filePath := path.Join(cfg.FrontendDistPath, r.URL.Path)
+		fi, err := os.Stat(filePath)
+
+		if filePath == "/" || os.IsNotExist(err) || fi.IsDir() {
+			http.ServeFile(w, r, indexPath)
+			return
+		}
+
+		if err != nil {
+			http.ServeFile(w, r, indexPath)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		http.ServeFile(w, r, filePath)
+	})
+
 	http.ListenAndServe(
 		"0.0.0.0:8080",
 		h2c.NewHandler(mux, &http2.Server{}),

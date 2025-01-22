@@ -8,7 +8,10 @@ import (
 	"github.com/markormesher/atlas/internal/core"
 	atlasv1 "github.com/markormesher/atlas/internal/gen/atlas/v1"
 	"github.com/markormesher/atlas/internal/gen/atlas/v1/atlasv1connect"
+	"github.com/markormesher/atlas/internal/logging"
 )
+
+var l = logging.Logger
 
 type apiServer struct {
 	core *core.Core
@@ -34,4 +37,8 @@ func (s *apiServer) GetPlaces(ctx context.Context, req *connect.Request[atlasv1.
 	return connect.NewResponse(&atlasv1.GetPlacesResponse{
 		Places: places,
 	}), nil
+}
+
+func (s *apiServer) AuthCheck(ctx context.Context, req *connect.Request[atlasv1.AuthCheckRequest]) (*connect.Response[atlasv1.AuthCheckResponse], error) {
+	return connect.NewResponse(&atlasv1.AuthCheckResponse{}), nil
 }

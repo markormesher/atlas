@@ -18,6 +18,11 @@ message GetPlacesResponse {
   repeated Place places = 1;
 }
 
+message AuthCheckRequest {}
+
+message AuthCheckResponse {}
+
 service AtlasService {
   rpc GetPlaces(GetPlacesRequest) returns (GetPlacesResponse);
+  rpc AuthCheck(AuthCheckRequest) returns (AuthCheckResponse);
 }
