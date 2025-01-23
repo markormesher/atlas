@@ -9,6 +9,14 @@ import (
 
 func (s *apiServer) AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		// allow-list routes
+		path := req.URL.Path
+		if path == "/" || path == "/atlas.v1.AtlasService/GetPlaces" || strings.HasPrefix(path, "/assets") {
+			next.ServeHTTP(res, req)
+			return
+		}
+
+		// otherwise, enforce auth...
 		fail := func() {
 			res.Header().Add("www-authenticate", `Basic realm="atlas"`)
 			res.WriteHeader(401)
