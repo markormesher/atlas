@@ -7,7 +7,18 @@ package db
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
+
+const deletePlace = `-- name: DeletePlace :exec
+DELETE FROM places WHERE id = $1
+`
+
+func (q *Queries) DeletePlace(ctx context.Context, id pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, deletePlace, id)
+	return err
+}
 
 const getPlaces = `-- name: GetPlaces :many
 SELECT id, name, country, lat, lon FROM places

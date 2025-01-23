@@ -8,6 +8,7 @@ function Editor(): ReactElement {
   const apiTransport = createConnectTransport({ baseUrl: "/" });
   const apiClient = createClient(AtlasService, apiTransport);
 
+  const [reloadTrigger, setReloadTrigger] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState<boolean | null>(null);
   const [places, setPlaces] = React.useState<Record<string, Place>>({});
 
@@ -32,7 +33,7 @@ function Editor(): ReactElement {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [reloadTrigger]);
 
   function setStringValue(id: string, key: "name" | "country", evt: React.ChangeEvent<HTMLInputElement>): void {
     const value = evt.target.value.trim();
@@ -56,6 +57,19 @@ function Editor(): ReactElement {
     });
   }
 
+  // function savePlace() {}
+
+  function deletePlace(id: string) {
+    apiClient
+      .deletePlace({ id })
+      .then(() => {
+        setReloadTrigger(new Date().getTime());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   if (loggedIn === null) {
     return (
       <div className={"editor-wrapper"}>
@@ -74,6 +88,9 @@ function Editor(): ReactElement {
   return (
     <div className={"editor-wrapper"}>
       <h1>Atlas - Editor</h1>
+      <p>
+        <em>To delete a place, clear both the name and country fields then click "delete".</em>
+      </p>
       <table>
         <thead>
           <tr>
@@ -85,6 +102,24 @@ function Editor(): ReactElement {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>
+              <input type={"text"} placeholder={"Add new"} />
+            </td>
+            <td>
+              <input type={"text"} placeholder={"Add new"} />
+            </td>
+            <td>
+              <input type={"text"} placeholder={"Add new"} />
+            </td>
+            <td>
+              <input type={"text"} placeholder={"Add new"} />
+            </td>
+            <td>
+              <input type={"button"} value={"Create"} />
+            </td>
+          </tr>
+
           {Object.entries(places)
             .sort((a, b) => `${a[1].country}, ${a[1].name}`.localeCompare(`${b[1].country}, ${b[1].name}`))
             .map(([id, place]) => {
@@ -118,7 +153,7 @@ function Editor(): ReactElement {
                   </td>
                   <td>
                     {isBlank ? (
-                      <input type={"button"} value={"Delete"} />
+                      <input type={"button"} value={"Delete"} onClick={() => deletePlace(id)} />
                     ) : (
                       <input type={"button"} value={"Save"} disabled={!isValid} />
                     )}
@@ -126,24 +161,6 @@ function Editor(): ReactElement {
                 </tr>
               );
             })}
-
-          <tr>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"button"} value={"Save"} />
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>

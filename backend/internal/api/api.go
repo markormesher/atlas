@@ -39,6 +39,15 @@ func (s *apiServer) GetPlaces(ctx context.Context, req *connect.Request[atlasv1.
 	}), nil
 }
 
+func (s *apiServer) SavePlace(ctx context.Context, req *connect.Request[atlasv1.SavePlaceRequest]) (*connect.Response[atlasv1.SavePlaceResponse], error) {
+	return nil, nil
+}
+
+func (s *apiServer) DeletePlace(ctx context.Context, req *connect.Request[atlasv1.DeletePlaceRequest]) (*connect.Response[atlasv1.DeletePlaceResponse], error) {
+	err := s.core.DeletePlace(ctx, req.Msg.Id)
+	return &connect.Response[atlasv1.DeletePlaceResponse]{}, err
+}
+
 func (s *apiServer) AuthCheck(ctx context.Context, req *connect.Request[atlasv1.AuthCheckRequest]) (*connect.Response[atlasv1.AuthCheckResponse], error) {
 	return connect.NewResponse(&atlasv1.AuthCheckResponse{}), nil
 }
