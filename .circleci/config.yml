@@ -4,7 +4,7 @@ jobs:
   build-publish:
     working_directory: ~/app
     docker:
-      - image: cimg/node:17.9.1
+      - image: cimg/node:23.6.1
     steps:
       - checkout
       - setup_remote_docker:
