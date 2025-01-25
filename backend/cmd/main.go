@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"os"
-	"path"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -15,6 +14,7 @@ import (
 	"github.com/markormesher/atlas/internal/db"
 	"github.com/markormesher/atlas/internal/gen/atlas/v1/atlasv1connect"
 	"github.com/markormesher/atlas/internal/logging"
+	"github.com/markormesher/atlas/internal/spa"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 )
@@ -68,37 +68,25 @@ func main() {
 		Config:  cfg,
 		Queries: *db.New(pool),
 	}
+	apiServer := api.NewApiServer(&core)
 
 	// server setup
 	mux := mux.NewRouter()
-	apiServer := api.NewApiServer(&core)
 
-	// auth middleware
+	// auth
 	mux.Use(apiServer.AuthMiddleware)
+	mux.Path("/login").Handler(apiServer.LoginHandler())
 
-	// API server
+	// backend server
 	apiPath, apiHandler := atlasv1connect.NewAtlasServiceHandler(apiServer)
 	mux.PathPrefix(apiPath).Handler(apiHandler)
 
-	// SPA frontend
-	mux.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		indexPath := path.Join(cfg.FrontendDistPath, "index.html")
-		filePath := path.Join(cfg.FrontendDistPath, r.URL.Path)
-		fi, err := os.Stat(filePath)
-
-		if filePath == "/" || os.IsNotExist(err) || fi.IsDir() {
-			http.ServeFile(w, r, indexPath)
-			return
-		}
-
-		if err != nil {
-			http.ServeFile(w, r, indexPath)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		http.ServeFile(w, r, filePath)
-	})
+	// frontend server
+	appServer := spa.SinglePageApp{
+		ContentBase: cfg.FrontendDistPath,
+		IndexPage:   "index.html",
+	}
+	mux.PathPrefix("/").Handler(appServer.Handler())
 
 	http.ListenAndServe(
 		"0.0.0.0:8080",

@@ -18,7 +18,7 @@ function Editor(): ReactElement {
       .then(() => setLoggedIn(true))
       .catch((err) => {
         console.log(err);
-        setLoggedIn(false);
+        window.location.assign("/login");
       });
   }, []);
 
@@ -70,17 +70,10 @@ function Editor(): ReactElement {
       });
   }
 
-  if (loggedIn === null) {
+  if (!loggedIn) {
     return (
       <div className={"editor-wrapper"}>
         <p>Waiting for login...</p>
-      </div>
-    );
-  } else if (!loggedIn) {
-    window.location.assign("/");
-    return (
-      <div className={"editor-wrapper"}>
-        <p>Redirecting...</p>
       </div>
     );
   }

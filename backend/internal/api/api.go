@@ -2,12 +2,10 @@ package api
 
 import (
 	"context"
-	"net/http"
 
 	"connectrpc.com/connect"
 	"github.com/markormesher/atlas/internal/core"
 	atlasv1 "github.com/markormesher/atlas/internal/gen/atlas/v1"
-	"github.com/markormesher/atlas/internal/gen/atlas/v1/atlasv1connect"
 	"github.com/markormesher/atlas/internal/logging"
 )
 
@@ -23,11 +21,6 @@ func NewApiServer(core *core.Core) *apiServer {
 	}
 }
 
-func (s *apiServer) ConfigureMux(mux *http.ServeMux) {
-	path, handler := atlasv1connect.NewAtlasServiceHandler(s)
-	mux.Handle(path, handler)
-}
-
 func (s *apiServer) GetPlaces(ctx context.Context, req *connect.Request[atlasv1.GetPlacesRequest]) (*connect.Response[atlasv1.GetPlacesResponse], error) {
 	places, err := s.core.GetPlaces(ctx)
 	if err != nil {
@@ -40,14 +33,26 @@ func (s *apiServer) GetPlaces(ctx context.Context, req *connect.Request[atlasv1.
 }
 
 func (s *apiServer) SavePlace(ctx context.Context, req *connect.Request[atlasv1.SavePlaceRequest]) (*connect.Response[atlasv1.SavePlaceResponse], error) {
+	if !s.GetLoggedIn(req) {
+		return nil, connect.NewError(connect.CodeUnauthenticated, nil)
+	}
+
 	return nil, nil
 }
 
 func (s *apiServer) DeletePlace(ctx context.Context, req *connect.Request[atlasv1.DeletePlaceRequest]) (*connect.Response[atlasv1.DeletePlaceResponse], error) {
+	if !s.GetLoggedIn(req) {
+		return nil, connect.NewError(connect.CodeUnauthenticated, nil)
+	}
+
 	err := s.core.DeletePlace(ctx, req.Msg.Id)
 	return &connect.Response[atlasv1.DeletePlaceResponse]{}, err
 }
 
 func (s *apiServer) AuthCheck(ctx context.Context, req *connect.Request[atlasv1.AuthCheckRequest]) (*connect.Response[atlasv1.AuthCheckResponse], error) {
+	if !s.GetLoggedIn(req) {
+		return nil, connect.NewError(connect.CodeUnauthenticated, nil)
+	}
+
 	return connect.NewResponse(&atlasv1.AuthCheckResponse{}), nil
 }
