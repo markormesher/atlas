@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
+	guuid "github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -29,4 +30,20 @@ func ParseUUID(src string) (pgtype.UUID, error) {
 		Bytes: dst,
 		Valid: true,
 	}, nil
+}
+
+func IsZero(uuid pgtype.UUID) bool {
+	for _, b := range uuid.Bytes {
+		if b != 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func New() pgtype.UUID {
+	// this is ugly and is going to go away
+	n := guuid.New().String()
+	u, _ := ParseUUID(n)
+	return u
 }

@@ -35,8 +35,9 @@ const (
 const (
 	// AtlasServiceGetPlacesProcedure is the fully-qualified name of the AtlasService's GetPlaces RPC.
 	AtlasServiceGetPlacesProcedure = "/atlas.v1.AtlasService/GetPlaces"
-	// AtlasServiceSavePlaceProcedure is the fully-qualified name of the AtlasService's SavePlace RPC.
-	AtlasServiceSavePlaceProcedure = "/atlas.v1.AtlasService/SavePlace"
+	// AtlasServiceUpdatePlaceProcedure is the fully-qualified name of the AtlasService's UpdatePlace
+	// RPC.
+	AtlasServiceUpdatePlaceProcedure = "/atlas.v1.AtlasService/UpdatePlace"
 	// AtlasServiceDeletePlaceProcedure is the fully-qualified name of the AtlasService's DeletePlace
 	// RPC.
 	AtlasServiceDeletePlaceProcedure = "/atlas.v1.AtlasService/DeletePlace"
@@ -47,7 +48,7 @@ const (
 // AtlasServiceClient is a client for the atlas.v1.AtlasService service.
 type AtlasServiceClient interface {
 	GetPlaces(context.Context, *connect.Request[v1.GetPlacesRequest]) (*connect.Response[v1.GetPlacesResponse], error)
-	SavePlace(context.Context, *connect.Request[v1.SavePlaceRequest]) (*connect.Response[v1.SavePlaceResponse], error)
+	UpdatePlace(context.Context, *connect.Request[v1.UpdatePlaceRequest]) (*connect.Response[v1.UpdatePlaceResponse], error)
 	DeletePlace(context.Context, *connect.Request[v1.DeletePlaceRequest]) (*connect.Response[v1.DeletePlaceResponse], error)
 	AuthCheck(context.Context, *connect.Request[v1.AuthCheckRequest]) (*connect.Response[v1.AuthCheckResponse], error)
 }
@@ -69,10 +70,10 @@ func NewAtlasServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(atlasServiceMethods.ByName("GetPlaces")),
 			connect.WithClientOptions(opts...),
 		),
-		savePlace: connect.NewClient[v1.SavePlaceRequest, v1.SavePlaceResponse](
+		updatePlace: connect.NewClient[v1.UpdatePlaceRequest, v1.UpdatePlaceResponse](
 			httpClient,
-			baseURL+AtlasServiceSavePlaceProcedure,
-			connect.WithSchema(atlasServiceMethods.ByName("SavePlace")),
+			baseURL+AtlasServiceUpdatePlaceProcedure,
+			connect.WithSchema(atlasServiceMethods.ByName("UpdatePlace")),
 			connect.WithClientOptions(opts...),
 		),
 		deletePlace: connect.NewClient[v1.DeletePlaceRequest, v1.DeletePlaceResponse](
@@ -93,7 +94,7 @@ func NewAtlasServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 // atlasServiceClient implements AtlasServiceClient.
 type atlasServiceClient struct {
 	getPlaces   *connect.Client[v1.GetPlacesRequest, v1.GetPlacesResponse]
-	savePlace   *connect.Client[v1.SavePlaceRequest, v1.SavePlaceResponse]
+	updatePlace *connect.Client[v1.UpdatePlaceRequest, v1.UpdatePlaceResponse]
 	deletePlace *connect.Client[v1.DeletePlaceRequest, v1.DeletePlaceResponse]
 	authCheck   *connect.Client[v1.AuthCheckRequest, v1.AuthCheckResponse]
 }
@@ -103,9 +104,9 @@ func (c *atlasServiceClient) GetPlaces(ctx context.Context, req *connect.Request
 	return c.getPlaces.CallUnary(ctx, req)
 }
 
-// SavePlace calls atlas.v1.AtlasService.SavePlace.
-func (c *atlasServiceClient) SavePlace(ctx context.Context, req *connect.Request[v1.SavePlaceRequest]) (*connect.Response[v1.SavePlaceResponse], error) {
-	return c.savePlace.CallUnary(ctx, req)
+// UpdatePlace calls atlas.v1.AtlasService.UpdatePlace.
+func (c *atlasServiceClient) UpdatePlace(ctx context.Context, req *connect.Request[v1.UpdatePlaceRequest]) (*connect.Response[v1.UpdatePlaceResponse], error) {
+	return c.updatePlace.CallUnary(ctx, req)
 }
 
 // DeletePlace calls atlas.v1.AtlasService.DeletePlace.
@@ -121,7 +122,7 @@ func (c *atlasServiceClient) AuthCheck(ctx context.Context, req *connect.Request
 // AtlasServiceHandler is an implementation of the atlas.v1.AtlasService service.
 type AtlasServiceHandler interface {
 	GetPlaces(context.Context, *connect.Request[v1.GetPlacesRequest]) (*connect.Response[v1.GetPlacesResponse], error)
-	SavePlace(context.Context, *connect.Request[v1.SavePlaceRequest]) (*connect.Response[v1.SavePlaceResponse], error)
+	UpdatePlace(context.Context, *connect.Request[v1.UpdatePlaceRequest]) (*connect.Response[v1.UpdatePlaceResponse], error)
 	DeletePlace(context.Context, *connect.Request[v1.DeletePlaceRequest]) (*connect.Response[v1.DeletePlaceResponse], error)
 	AuthCheck(context.Context, *connect.Request[v1.AuthCheckRequest]) (*connect.Response[v1.AuthCheckResponse], error)
 }
@@ -139,10 +140,10 @@ func NewAtlasServiceHandler(svc AtlasServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(atlasServiceMethods.ByName("GetPlaces")),
 		connect.WithHandlerOptions(opts...),
 	)
-	atlasServiceSavePlaceHandler := connect.NewUnaryHandler(
-		AtlasServiceSavePlaceProcedure,
-		svc.SavePlace,
-		connect.WithSchema(atlasServiceMethods.ByName("SavePlace")),
+	atlasServiceUpdatePlaceHandler := connect.NewUnaryHandler(
+		AtlasServiceUpdatePlaceProcedure,
+		svc.UpdatePlace,
+		connect.WithSchema(atlasServiceMethods.ByName("UpdatePlace")),
 		connect.WithHandlerOptions(opts...),
 	)
 	atlasServiceDeletePlaceHandler := connect.NewUnaryHandler(
@@ -161,8 +162,8 @@ func NewAtlasServiceHandler(svc AtlasServiceHandler, opts ...connect.HandlerOpti
 		switch r.URL.Path {
 		case AtlasServiceGetPlacesProcedure:
 			atlasServiceGetPlacesHandler.ServeHTTP(w, r)
-		case AtlasServiceSavePlaceProcedure:
-			atlasServiceSavePlaceHandler.ServeHTTP(w, r)
+		case AtlasServiceUpdatePlaceProcedure:
+			atlasServiceUpdatePlaceHandler.ServeHTTP(w, r)
 		case AtlasServiceDeletePlaceProcedure:
 			atlasServiceDeletePlaceHandler.ServeHTTP(w, r)
 		case AtlasServiceAuthCheckProcedure:
@@ -180,8 +181,8 @@ func (UnimplementedAtlasServiceHandler) GetPlaces(context.Context, *connect.Requ
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("atlas.v1.AtlasService.GetPlaces is not implemented"))
 }
 
-func (UnimplementedAtlasServiceHandler) SavePlace(context.Context, *connect.Request[v1.SavePlaceRequest]) (*connect.Response[v1.SavePlaceResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("atlas.v1.AtlasService.SavePlace is not implemented"))
+func (UnimplementedAtlasServiceHandler) UpdatePlace(context.Context, *connect.Request[v1.UpdatePlaceRequest]) (*connect.Response[v1.UpdatePlaceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("atlas.v1.AtlasService.UpdatePlace is not implemented"))
 }
 
 func (UnimplementedAtlasServiceHandler) DeletePlace(context.Context, *connect.Request[v1.DeletePlaceRequest]) (*connect.Response[v1.DeletePlaceResponse], error) {

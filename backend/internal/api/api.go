@@ -32,12 +32,13 @@ func (s *apiServer) GetPlaces(ctx context.Context, req *connect.Request[atlasv1.
 	}), nil
 }
 
-func (s *apiServer) SavePlace(ctx context.Context, req *connect.Request[atlasv1.SavePlaceRequest]) (*connect.Response[atlasv1.SavePlaceResponse], error) {
+func (s *apiServer) UpdatePlace(ctx context.Context, req *connect.Request[atlasv1.UpdatePlaceRequest]) (*connect.Response[atlasv1.UpdatePlaceResponse], error) {
 	if !s.GetLoggedIn(req) {
 		return nil, connect.NewError(connect.CodeUnauthenticated, nil)
 	}
 
-	return nil, nil
+	err := s.core.UpdatePlace(ctx, req.Msg.Place)
+	return &connect.Response[atlasv1.UpdatePlaceResponse]{}, err
 }
 
 func (s *apiServer) DeletePlace(ctx context.Context, req *connect.Request[atlasv1.DeletePlaceRequest]) (*connect.Response[atlasv1.DeletePlaceResponse], error) {

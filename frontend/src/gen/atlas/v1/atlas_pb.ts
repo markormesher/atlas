@@ -10,7 +10,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file atlas/v1/atlas.proto.
  */
 export const file_atlas_v1_atlas: GenFile = /*@__PURE__*/
-  fileDesc("ChRhdGxhcy92MS9hdGxhcy5wcm90bxIIYXRsYXMudjEiTAoFUGxhY2USCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIPCgdjb3VudHJ5GAMgASgJEgsKA2xhdBgEIAEoARILCgNsb24YBSABKAEiEgoQR2V0UGxhY2VzUmVxdWVzdCI0ChFHZXRQbGFjZXNSZXNwb25zZRIfCgZwbGFjZXMYASADKAsyDy5hdGxhcy52MS5QbGFjZSIyChBTYXZlUGxhY2VSZXF1ZXN0Eh4KBXBsYWNlGAEgASgLMg8uYXRsYXMudjEuUGxhY2UiMwoRU2F2ZVBsYWNlUmVzcG9uc2USHgoFcGxhY2UYASABKAsyDy5hdGxhcy52MS5QbGFjZSIgChJEZWxldGVQbGFjZVJlcXVlc3QSCgoCaWQYASABKAkiFQoTRGVsZXRlUGxhY2VSZXNwb25zZSISChBBdXRoQ2hlY2tSZXF1ZXN0IhMKEUF1dGhDaGVja1Jlc3BvbnNlMqwCCgxBdGxhc1NlcnZpY2USRAoJR2V0UGxhY2VzEhouYXRsYXMudjEuR2V0UGxhY2VzUmVxdWVzdBobLmF0bGFzLnYxLkdldFBsYWNlc1Jlc3BvbnNlEkQKCVNhdmVQbGFjZRIaLmF0bGFzLnYxLlNhdmVQbGFjZVJlcXVlc3QaGy5hdGxhcy52MS5TYXZlUGxhY2VSZXNwb25zZRJKCgtEZWxldGVQbGFjZRIcLmF0bGFzLnYxLkRlbGV0ZVBsYWNlUmVxdWVzdBodLmF0bGFzLnYxLkRlbGV0ZVBsYWNlUmVzcG9uc2USRAoJQXV0aENoZWNrEhouYXRsYXMudjEuQXV0aENoZWNrUmVxdWVzdBobLmF0bGFzLnYxLkF1dGhDaGVja1Jlc3BvbnNlQj1aO2dpdGh1Yi5jb20vbWFya29ybWVzaGVyL2F0bGFzL2ludGVybmFsL2dlbi9hdGxhcy92MTthdGxhc3YxYgZwcm90bzM");
+  fileDesc("ChRhdGxhcy92MS9hdGxhcy5wcm90bxIIYXRsYXMudjEiTAoFUGxhY2USCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIPCgdjb3VudHJ5GAMgASgJEgsKA2xhdBgEIAEoARILCgNsb24YBSABKAEiEgoQR2V0UGxhY2VzUmVxdWVzdCI0ChFHZXRQbGFjZXNSZXNwb25zZRIfCgZwbGFjZXMYASADKAsyDy5hdGxhcy52MS5QbGFjZSI0ChJVcGRhdGVQbGFjZVJlcXVlc3QSHgoFcGxhY2UYASABKAsyDy5hdGxhcy52MS5QbGFjZSI1ChNVcGRhdGVQbGFjZVJlc3BvbnNlEh4KBXBsYWNlGAEgASgLMg8uYXRsYXMudjEuUGxhY2UiIAoSRGVsZXRlUGxhY2VSZXF1ZXN0EgoKAmlkGAEgASgJIhUKE0RlbGV0ZVBsYWNlUmVzcG9uc2UiEgoQQXV0aENoZWNrUmVxdWVzdCITChFBdXRoQ2hlY2tSZXNwb25zZTKyAgoMQXRsYXNTZXJ2aWNlEkQKCUdldFBsYWNlcxIaLmF0bGFzLnYxLkdldFBsYWNlc1JlcXVlc3QaGy5hdGxhcy52MS5HZXRQbGFjZXNSZXNwb25zZRJKCgtVcGRhdGVQbGFjZRIcLmF0bGFzLnYxLlVwZGF0ZVBsYWNlUmVxdWVzdBodLmF0bGFzLnYxLlVwZGF0ZVBsYWNlUmVzcG9uc2USSgoLRGVsZXRlUGxhY2USHC5hdGxhcy52MS5EZWxldGVQbGFjZVJlcXVlc3QaHS5hdGxhcy52MS5EZWxldGVQbGFjZVJlc3BvbnNlEkQKCUF1dGhDaGVjaxIaLmF0bGFzLnYxLkF1dGhDaGVja1JlcXVlc3QaGy5hdGxhcy52MS5BdXRoQ2hlY2tSZXNwb25zZUI9WjtnaXRodWIuY29tL21hcmtvcm1lc2hlci9hdGxhcy9pbnRlcm5hbC9nZW4vYXRsYXMvdjE7YXRsYXN2MWIGcHJvdG8z");
 
 /**
  * @generated from message atlas.v1.Place
@@ -80,9 +80,9 @@ export const GetPlacesResponseSchema: GenMessage<GetPlacesResponse> = /*@__PURE_
   messageDesc(file_atlas_v1_atlas, 2);
 
 /**
- * @generated from message atlas.v1.SavePlaceRequest
+ * @generated from message atlas.v1.UpdatePlaceRequest
  */
-export type SavePlaceRequest = Message<"atlas.v1.SavePlaceRequest"> & {
+export type UpdatePlaceRequest = Message<"atlas.v1.UpdatePlaceRequest"> & {
   /**
    * @generated from field: atlas.v1.Place place = 1;
    */
@@ -90,16 +90,16 @@ export type SavePlaceRequest = Message<"atlas.v1.SavePlaceRequest"> & {
 };
 
 /**
- * Describes the message atlas.v1.SavePlaceRequest.
- * Use `create(SavePlaceRequestSchema)` to create a new message.
+ * Describes the message atlas.v1.UpdatePlaceRequest.
+ * Use `create(UpdatePlaceRequestSchema)` to create a new message.
  */
-export const SavePlaceRequestSchema: GenMessage<SavePlaceRequest> = /*@__PURE__*/
+export const UpdatePlaceRequestSchema: GenMessage<UpdatePlaceRequest> = /*@__PURE__*/
   messageDesc(file_atlas_v1_atlas, 3);
 
 /**
- * @generated from message atlas.v1.SavePlaceResponse
+ * @generated from message atlas.v1.UpdatePlaceResponse
  */
-export type SavePlaceResponse = Message<"atlas.v1.SavePlaceResponse"> & {
+export type UpdatePlaceResponse = Message<"atlas.v1.UpdatePlaceResponse"> & {
   /**
    * @generated from field: atlas.v1.Place place = 1;
    */
@@ -107,10 +107,10 @@ export type SavePlaceResponse = Message<"atlas.v1.SavePlaceResponse"> & {
 };
 
 /**
- * Describes the message atlas.v1.SavePlaceResponse.
- * Use `create(SavePlaceResponseSchema)` to create a new message.
+ * Describes the message atlas.v1.UpdatePlaceResponse.
+ * Use `create(UpdatePlaceResponseSchema)` to create a new message.
  */
-export const SavePlaceResponseSchema: GenMessage<SavePlaceResponse> = /*@__PURE__*/
+export const UpdatePlaceResponseSchema: GenMessage<UpdatePlaceResponse> = /*@__PURE__*/
   messageDesc(file_atlas_v1_atlas, 4);
 
 /**
@@ -182,12 +182,12 @@ export const AtlasService: GenService<{
     output: typeof GetPlacesResponseSchema;
   },
   /**
-   * @generated from rpc atlas.v1.AtlasService.SavePlace
+   * @generated from rpc atlas.v1.AtlasService.UpdatePlace
    */
-  savePlace: {
+  updatePlace: {
     methodKind: "unary";
-    input: typeof SavePlaceRequestSchema;
-    output: typeof SavePlaceResponseSchema;
+    input: typeof UpdatePlaceRequestSchema;
+    output: typeof UpdatePlaceResponseSchema;
   },
   /**
    * @generated from rpc atlas.v1.AtlasService.DeletePlace

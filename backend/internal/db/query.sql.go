@@ -49,3 +49,34 @@ func (q *Queries) GetPlaces(ctx context.Context) ([]Place, error) {
 	}
 	return items, nil
 }
+
+const upsertPlace = `-- name: UpsertPlace :exec
+INSERT INTO places (
+  id, name, country, lat, lon
+) VALUES (
+  $1, $2, $3, $4, $5
+) ON CONFLICT (id) DO UPDATE SET
+  name = $2,
+  country = $3,
+  lat = $4,
+  lon = $5
+`
+
+type UpsertPlaceParams struct {
+	ID      pgtype.UUID
+	Name    string
+	Country string
+	Lat     float64
+	Lon     float64
+}
+
+func (q *Queries) UpsertPlace(ctx context.Context, arg UpsertPlaceParams) error {
+	_, err := q.db.Exec(ctx, upsertPlace,
+		arg.ID,
+		arg.Name,
+		arg.Country,
+		arg.Lat,
+		arg.Lon,
+	)
+	return err
+}

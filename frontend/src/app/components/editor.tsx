@@ -5,6 +5,8 @@ import { createClient } from "@connectrpc/connect";
 import { AtlasService, Place } from "../../gen/atlas/v1/atlas_pb";
 
 function Editor(): ReactElement {
+  const zeroId = "00000000-0000-0000-0000-000000000000";
+
   const apiTransport = createConnectTransport({ baseUrl: "/" });
   const apiClient = createClient(AtlasService, apiTransport);
 
@@ -28,6 +30,14 @@ function Editor(): ReactElement {
       .then((res) => {
         const placeMap: Record<string, Place> = {};
         res.places.forEach((p) => (placeMap[p.id] = p));
+        placeMap[zeroId] = {
+          $typeName: "atlas.v1.Place",
+          id: zeroId,
+          name: "",
+          country: "",
+          lat: NaN,
+          lon: NaN,
+        };
         setPlaces(placeMap);
       })
       .catch((err) => {
@@ -36,7 +46,7 @@ function Editor(): ReactElement {
   }, [reloadTrigger]);
 
   function setStringValue(id: string, key: "name" | "country", evt: React.ChangeEvent<HTMLInputElement>): void {
-    const value = evt.target.value.trim();
+    const value = evt.target.value;
     setPlaces((p) => {
       if (p[id]) {
         p[id][key] = value;
@@ -57,7 +67,21 @@ function Editor(): ReactElement {
     });
   }
 
-  // function savePlace() {}
+  function updatePlace(id: string) {
+    const place = places[id];
+    if (!place) {
+      return;
+    }
+
+    apiClient
+      .updatePlace({ place })
+      .then(() => {
+        setReloadTrigger(new Date().getTime());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function deletePlace(id: string) {
     apiClient
@@ -95,42 +119,36 @@ function Editor(): ReactElement {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"text"} placeholder={"Add new"} />
-            </td>
-            <td>
-              <input type={"button"} value={"Create"} />
-            </td>
-          </tr>
-
           {Object.entries(places)
             .sort((a, b) => `${a[1].country}, ${a[1].name}`.localeCompare(`${b[1].country}, ${b[1].name}`))
             .map(([id, place]) => {
               const isValid =
                 place.name.length > 0 && place.country.length > 0 && !isNaN(place.lat) && !isNaN(place.lon);
               const isBlank = place.name == "" && place.country == "";
+              const isNew = id == zeroId;
 
               return (
                 <tr key={id}>
                   <td>
-                    <input type={"text"} value={place.name} onChange={(evt) => setStringValue(id, "name", evt)} />
+                    <input
+                      type={"text"}
+                      placeholder={isNew ? "Create new..." : undefined}
+                      value={place.name}
+                      onChange={(evt) => setStringValue(id, "name", evt)}
+                    />
                   </td>
                   <td>
-                    <input type={"text"} value={place.country} onChange={(evt) => setStringValue(id, "country", evt)} />
+                    <input
+                      type={"text"}
+                      placeholder={isNew ? "Create new..." : undefined}
+                      value={place.country}
+                      onChange={(evt) => setStringValue(id, "country", evt)}
+                    />
                   </td>
                   <td>
                     <input
                       type={"number"}
+                      placeholder={isNew ? "Create new..." : undefined}
                       value={isNaN(place.lat) ? "" : place.lat}
                       onChange={(evt) => setFloatValue(id, "lat", evt)}
                       step={"0.0001"}
@@ -139,16 +157,22 @@ function Editor(): ReactElement {
                   <td>
                     <input
                       type={"number"}
+                      placeholder={isNew ? "Create new..." : undefined}
                       value={isNaN(place.lon) ? "" : place.lon}
                       onChange={(evt) => setFloatValue(id, "lon", evt)}
                       step={"0.0001"}
                     />
                   </td>
                   <td>
-                    {isBlank ? (
+                    {isBlank && !isNew ? (
                       <input type={"button"} value={"Delete"} onClick={() => deletePlace(id)} />
                     ) : (
-                      <input type={"button"} value={"Save"} disabled={!isValid} />
+                      <input
+                        type={"button"}
+                        value={isNew ? "Create" : "Save"}
+                        disabled={!isValid}
+                        onClick={() => updatePlace(id)}
+                      />
                     )}
                   </td>
                 </tr>
