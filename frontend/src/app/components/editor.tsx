@@ -178,10 +178,11 @@ function Editor(): ReactElement {
                   </td>
                   <td>
                     {isBlank && !isNew ? (
-                      <input type={"button"} value={"Delete"} onClick={() => deletePlace(id)} />
+                      <input type={"button"} className={"outline"} value={"Delete"} onClick={() => deletePlace(id)} />
                     ) : (
                       <input
                         type={"button"}
+                        className={"outline"}
                         value={isNew ? "Create" : "Save"}
                         disabled={!isValid}
                         onClick={() => updatePlace(id)}
