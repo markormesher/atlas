@@ -1,4 +1,4 @@
-package db
+package database
 
 import (
 	"context"
@@ -8,26 +8,20 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/jackc/pgx/v5"
 	"github.com/markormesher/atlas/internal/logging"
 )
 
 var l = logging.Logger
 
-type DBConnForMigration interface {
-	DBTX
-	Begin(ctx context.Context) (pgx.Tx, error)
-}
-
-func Migrate(ctx context.Context, db DBConnForMigration, migrationsDir string) error {
+func (db *DB) Migrate(ctx context.Context, migrationsDir string) error {
 	// make sure migration table exists
-	_, err := db.Exec(ctx, `CREATE TABLE IF NOT EXISTS __migration (name TEXT NOT NULL);`)
+	_, err := db.conn.Exec(ctx, `CREATE TABLE IF NOT EXISTS __migration (name TEXT NOT NULL);`)
 	if err != nil {
 		return fmt.Errorf("error creating migration state table: %w", err)
 	}
 
 	// get completed migrations
-	rows, err := db.Query(ctx, `SELECT name FROM __migration;`)
+	rows, err := db.conn.Query(ctx, `SELECT name FROM __migration;`)
 	if err != nil {
 		return fmt.Errorf("error listing completed migrations: %w", err)
 	}
@@ -79,17 +73,17 @@ func Migrate(ctx context.Context, db DBConnForMigration, migrationsDir string) e
 			return fmt.Errorf("error reading migration file: %w", err)
 		}
 
-		tx, err := db.Begin(ctx)
+		tx, err := db.conn.Begin(ctx)
 		if err != nil {
 			return fmt.Errorf("error running migration: %w", err)
 		}
 
-		if _, err = db.Exec(ctx, string(sqlBytes)); err != nil {
+		if _, err = db.conn.Exec(ctx, string(sqlBytes)); err != nil {
 			tx.Rollback(ctx)
 			return fmt.Errorf("error running migration: %w", err)
 		}
 
-		if _, err = db.Exec(ctx, `INSERT INTO __migration VALUES ( $1 );`, name); err != nil {
+		if _, err = db.conn.Exec(ctx, `INSERT INTO __migration VALUES ( $1 );`, name); err != nil {
 			tx.Rollback(ctx)
 			return fmt.Errorf("error running migration: %w", err)
 		}

@@ -3,46 +3,29 @@ package core
 import (
 	"context"
 
-	"github.com/markormesher/atlas/internal/db"
-	atlasv1 "github.com/markormesher/atlas/internal/gen/atlas/v1"
-	"github.com/markormesher/atlas/internal/uuid"
+	"github.com/google/uuid"
+	"github.com/markormesher/atlas/internal/schema"
 )
 
-func (c *Core) GetPlaces(ctx context.Context) ([]*atlasv1.Place, error) {
-	places, err := c.Queries.GetPlaces(ctx)
+func (c *Core) GetPlaces(ctx context.Context) ([]schema.Place, error) {
+	places, err := c.DB.GetPlaces(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return convertSlicePtr(places, convertPlaceDBToAPI), nil
+	return places, nil
 }
 
-func (c *Core) UpdatePlace(ctx context.Context, place *atlasv1.Place) error {
-	parsedId, err := uuid.ParseUUID(place.Id)
-	if err != nil {
-		return err
-	}
-
-	if uuid.IsZero(parsedId) {
-		parsedId = uuid.New()
+func (c *Core) UpdatePlace(ctx context.Context, place schema.Place) error {
+	if uuidIsZero(place.ID) {
+		place.ID = uuid.New()
 	}
 
 	// TODO: validation
 
-	return c.Queries.UpsertPlace(ctx, db.UpsertPlaceParams{
-		ID:      parsedId,
-		Name:    place.Name,
-		Country: place.Country,
-		Lat:     place.Lat,
-		Lon:     place.Lon,
-	})
+	return c.DB.UpsertPlace(ctx, place)
 }
 
-func (c *Core) DeletePlace(ctx context.Context, id string) error {
-	uuid, err := uuid.ParseUUID(id)
-	if err != nil {
-		return err
-	}
-
-	return c.Queries.DeletePlace(ctx, uuid)
+func (c *Core) DeletePlace(ctx context.Context, id uuid.UUID) error {
+	return c.DB.DeletePlace(ctx, id)
 }

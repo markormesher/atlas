@@ -2,10 +2,10 @@ package core
 
 import (
 	"github.com/markormesher/atlas/internal/config"
-	"github.com/markormesher/atlas/internal/db"
+	"github.com/markormesher/atlas/internal/database"
 )
 
 type Core struct {
-	Queries db.Queries
-	Config  config.Config
+	DB     *database.DB
+	Config config.Config
 }

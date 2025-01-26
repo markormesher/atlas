@@ -11,7 +11,7 @@ import (
 	"github.com/markormesher/atlas/internal/api"
 	"github.com/markormesher/atlas/internal/config"
 	"github.com/markormesher/atlas/internal/core"
-	"github.com/markormesher/atlas/internal/db"
+	"github.com/markormesher/atlas/internal/database"
 	"github.com/markormesher/atlas/internal/gen/atlas/v1/atlasv1connect"
 	"github.com/markormesher/atlas/internal/logging"
 	"github.com/markormesher/atlas/internal/spa"
@@ -50,13 +50,14 @@ func main() {
 				os.Exit(1)
 			}
 		}
-
 		break
 	}
 	l.Info("database connectivity okay")
 
+	db := database.New(pool)
+
 	l.Info("migrating database")
-	err = db.Migrate(context.Background(), pool, "/app/sql/migrations")
+	err = db.Migrate(context.Background(), "/app/sql/migrations")
 	if err != nil {
 		l.Error("failed to mirgate database", "error", err)
 		os.Exit(1)
@@ -65,8 +66,8 @@ func main() {
 
 	// core logic
 	core := core.Core{
-		Config:  cfg,
-		Queries: *db.New(pool),
+		Config: cfg,
+		DB:     db,
 	}
 	apiServer := api.NewApiServer(&core)
 
