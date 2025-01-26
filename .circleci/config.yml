@@ -61,22 +61,6 @@ jobs:
           root: .
           paths:
             - ./task
-  gendiff-buf:
-    docker:
-      - image: docker.io/bufbuild/buf:1.48.0
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          command: ./task gendiff-buf
-  gendiff-sqlc:
-    docker:
-      - image: docker.io/sqlc/sqlc:1.28.0
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          command: ./task gendiff-sqlc
   imgbuild-imgpush:
     docker:
       - image: cimg/base:2024.12
@@ -161,6 +145,20 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - lint-buf:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - lint-sqlc:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
       - deps-go:
           requires:
             - checkout
@@ -175,38 +173,10 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - gendiff-buf:
-          requires:
-            - checkout
-            - deps-go
-            - deps-js
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
-      - gendiff-sqlc:
-          requires:
-            - checkout
-            - deps-go
-            - deps-js
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
-      - lint-buf:
-          requires:
-            - checkout
-            - deps-go
-            - deps-js
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
       - lint-go:
           requires:
             - checkout
             - deps-go
-            - deps-js
             - fetch-task
           filters:
             tags:
@@ -214,16 +184,6 @@ workflows:
       - lint-js:
           requires:
             - checkout
-            - deps-go
-            - deps-js
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
-      - lint-sqlc:
-          requires:
-            - checkout
-            - deps-go
             - deps-js
             - fetch-task
           filters:
@@ -233,8 +193,6 @@ workflows:
           requires:
             - checkout
             - fetch-task
-            - gendiff-buf
-            - gendiff-sqlc
             - imgrefs
             - lint-buf
             - lint-go
@@ -247,8 +205,6 @@ workflows:
           requires:
             - deps-go
             - deps-js
-            - gendiff-buf
-            - gendiff-sqlc
             - imgbuild-imgpush
             - imgrefs
             - lint-buf

@@ -42,24 +42,6 @@ tasks:
     dir: '{{.ROOT_DIR}}/sql'
     cmds:
       - cmd: sqlc generate
-  gendiff:
-    cmds:
-      - task: gendiff-buf-proto
-      - task: gendiff-sqlc-sql
-  gendiff-buf:
-    cmds:
-      - task: gendiff-buf-proto
-  gendiff-buf-proto:
-    dir: '{{.ROOT_DIR}}/proto'
-    cmds:
-      - cmd: buf generate && git diff --exit-code
-  gendiff-sqlc:
-    cmds:
-      - task: gendiff-sqlc-sql
-  gendiff-sqlc-sql:
-    dir: '{{.ROOT_DIR}}/sql'
-    cmds:
-      - cmd: sqlc diff
   imgbuild:
     cmds:
       - task: imgbuild-root
