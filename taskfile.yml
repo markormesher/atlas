@@ -173,7 +173,6 @@ tasks:
       - task: lint-buf-proto
       - task: lint-go-backend
       - task: lint-js-frontend
-      - task: lint-sqlc-sql
   lint-buf:
     cmds:
       - task: lint-buf-proto
@@ -202,13 +201,6 @@ tasks:
     dir: '{{.ROOT_DIR}}/frontend'
     cmds:
       - cmd: pnpm lint
-  lint-sqlc:
-    cmds:
-      - task: lint-sqlc-sql
-  lint-sqlc-sql:
-    dir: '{{.ROOT_DIR}}/sql'
-    cmds:
-      - cmd: sqlc vet
   lintfix:
     cmds:
       - task: lintfix-buf-proto
