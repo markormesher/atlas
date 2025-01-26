@@ -2,68 +2,19 @@
 
 # Atlas
 
-A super-simple tracker of the places you've visited around the world, originally created when [Wolpy](http://wolpy.com/) stopped working. This is designed to be hosted behind a reverse proxy like Nginx or Traefik.
-
-Places can be edited from `.../edit` on your install - the username is `admin` and the password is provided to the container in a file, or auto-generated on start.
-
-:rocket: Jump to [quick-start example](#quick-start-docker-compose-example).
-
-:whale: See releases on [ghcr.io](https://ghcr.io/markormesher/atlas).
+A super-simple tracker of the places you've visited around the world, originally created when [Wolpy](http://wolpy.com/) stopped working. Places can be edited from `.../edit` on your install - the username is `admin` and the password configuration is described below.
 
 ## Configuration via Environment Variables
 
 All arguments are required if they do not have a default value listed below.
 
-- `POSTGRES_HOST` - Postgres host
-- `POSTGRES_DATABASE` - Postgres database name
-- `POSTGRES_USER` - Postgres username
-- `POSTGRES_PASSWORD_FILE` - location of a file containing the Postgres password
-- `ADMIN_PASSWORD_FILE` - location of a file containing the desired admin password (default: auto-generated password, logged on start up)
-- `MAPBOX_TOKEN_FILE` - Mapbox API token for loading map tiles
+- `POSTGRES_CONNECTION_STRING` - Postgres connection string (see example below)
+- `ADMIN_PASSWORD` - admin password for editing (default: auto-generated password, logged on start up)
 
-## Quick-Start Docker-Compose Example
+## Quick-Start Example
 
-```yaml
-version: "3.8"
+See [podman-compose.yml](./podman-compose.yml) for a working example.
 
-services:
-  atlas:
-    image: ghcr.io/markormesher/atlas:VERSION
-    depends_on:
-      - postgres
-    posts:
-      - 3000:3000
-    secrets:
-      - postgres-password
-      - admin-password
-      - mapbox-token
-    environment:
-      - POSTGRES_HOST=atlas-postgres
-      - POSTGRES_USER=atlas
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-password
-      - POSTGRES_DATABASE=atlas
-      - ADMIN_PASSWORD_FILE=/run/secrets/admin-password
-      - MAPBOX_TOKEN_FILE=/run/secrets/mapbox-token
+## Technology Choices
 
-  atlas-postgres:
-    image: postgres:10.1-alpine
-    secrets:
-      - postgres-password
-    environment:
-      - POSTGRES_DATABASE=atlas
-      - POSTGRES_USER=atlas
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-password
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-
-volumes:
-  postgres-data:
-
-secrets:
-  postgres-password:
-    file: ./secrets/postgres-password.txt
-  admin-password:
-    file: ./secrets/admin-password.txt
-  mapbox-token:
-    file: ./secrets/mapbox-token.txt
-```
+This project sometimes serves as test-bed for technologies I'm considering for other projects, which is why it is somewhat over-engineered. Right now it is being used to test out Vite, SQLC, Protobuf, and others.
