@@ -154,35 +154,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - gendiff-buf:
-          requires:
-            - checkout
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
-      - gendiff-sqlc:
-          requires:
-            - checkout
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
       - imgrefs:
-          requires:
-            - checkout
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
-      - lint-buf:
-          requires:
-            - checkout
-            - fetch-task
-          filters:
-            tags:
-              only: /.*/
-      - lint-sqlc:
           requires:
             - checkout
             - fetch-task
@@ -203,10 +175,38 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - gendiff-buf:
+          requires:
+            - checkout
+            - deps-go
+            - deps-js
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - gendiff-sqlc:
+          requires:
+            - checkout
+            - deps-go
+            - deps-js
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - lint-buf:
+          requires:
+            - checkout
+            - deps-go
+            - deps-js
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
       - lint-go:
           requires:
             - checkout
             - deps-go
+            - deps-js
             - fetch-task
           filters:
             tags:
@@ -214,6 +214,16 @@ workflows:
       - lint-js:
           requires:
             - checkout
+            - deps-go
+            - deps-js
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - lint-sqlc:
+          requires:
+            - checkout
+            - deps-go
             - deps-js
             - fetch-task
           filters:
