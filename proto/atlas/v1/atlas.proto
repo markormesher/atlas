@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package atlas.v1;
 
-option go_package = "github.com/markormesher/atlas/internal/gen/atlas/v1;atlasv1";
+option go_package = "github.com/markormesher/atlas/internal/api_gen/atlas/v1;atlasv1";
 
 message Place {
   string id = 1;

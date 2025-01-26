@@ -5,9 +5,9 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	atlasv1 "github.com/markormesher/atlas/internal/api_gen/atlas/v1"
 	"github.com/markormesher/atlas/internal/convert"
 	"github.com/markormesher/atlas/internal/core"
-	atlasv1 "github.com/markormesher/atlas/internal/gen/atlas/v1"
 	"github.com/markormesher/atlas/internal/logging"
 )
 

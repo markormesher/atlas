@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/google/uuid"
-	atlasv1 "github.com/markormesher/atlas/internal/gen/atlas/v1"
+	atlasv1 "github.com/markormesher/atlas/internal/api_gen/atlas/v1"
 	"github.com/markormesher/atlas/internal/schema"
 )
 
