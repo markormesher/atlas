@@ -27,6 +27,7 @@ tasks:
   gen:
     cmds:
       - task: gen-buf-proto
+      - task: gen-sqlc-sql
   gen-buf:
     cmds:
       - task: gen-buf-proto
@@ -34,6 +35,31 @@ tasks:
     dir: '{{.ROOT_DIR}}/proto'
     cmds:
       - cmd: buf generate
+  gen-sqlc:
+    cmds:
+      - task: gen-sqlc-sql
+  gen-sqlc-sql:
+    dir: '{{.ROOT_DIR}}/sql'
+    cmds:
+      - cmd: sqlc generate
+  gendiff:
+    cmds:
+      - task: gendiff-buf-proto
+      - task: gendiff-sqlc-sql
+  gendiff-buf:
+    cmds:
+      - task: gendiff-buf-proto
+  gendiff-buf-proto:
+    dir: '{{.ROOT_DIR}}/proto'
+    cmds:
+      - cmd: buf generate && git diff --exit-code
+  gendiff-sqlc:
+    cmds:
+      - task: gendiff-sqlc-sql
+  gendiff-sqlc-sql:
+    dir: '{{.ROOT_DIR}}/sql'
+    cmds:
+      - cmd: sqlc diff
   imgbuild:
     cmds:
       - task: imgbuild-root
@@ -165,12 +191,14 @@ tasks:
       - task: lint-buf-proto
       - task: lint-go-backend
       - task: lint-js-frontend
+      - task: lint-sqlc-sql
   lint-buf:
     cmds:
       - task: lint-buf-proto
   lint-buf-proto:
     dir: '{{.ROOT_DIR}}/proto'
     cmds:
+      - cmd: buf format --diff --exit-code
       - cmd: buf lint
   lint-go:
     cmds:
@@ -192,9 +220,24 @@ tasks:
     dir: '{{.ROOT_DIR}}/frontend'
     cmds:
       - cmd: pnpm lint
+  lint-sqlc:
+    cmds:
+      - task: lint-sqlc-sql
+  lint-sqlc-sql:
+    dir: '{{.ROOT_DIR}}/sql'
+    cmds:
+      - cmd: sqlc vet
   lintfix:
     cmds:
+      - task: lintfix-buf-proto
       - task: lintfix-go-backend
+  lintfix-buf:
+    cmds:
+      - task: lintfix-buf-proto
+  lintfix-buf-proto:
+    dir: '{{.ROOT_DIR}}/proto'
+    cmds:
+      - cmd: buf format --write
   lintfix-go:
     cmds:
       - task: lintfix-go-backend

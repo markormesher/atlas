@@ -61,6 +61,22 @@ jobs:
           root: .
           paths:
             - ./task
+  gendiff-buf:
+    docker:
+      - image: docker.io/bufbuild/buf:1.48.0
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: ./task gendiff-buf
+  gendiff-sqlc:
+    docker:
+      - image: docker.io/sqlc/sqlc:1.28.0
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: ./task gendiff-sqlc
   imgbuild-imgpush:
     docker:
       - image: cimg/base:2024.12
@@ -115,6 +131,14 @@ jobs:
           command: |-
             corepack enable
             ./task lint-js
+  lint-sqlc:
+    docker:
+      - image: docker.io/sqlc/sqlc:1.28.0
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: ./task lint-sqlc
 workflows:
   version: 2
   main:
@@ -130,6 +154,20 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - gendiff-buf:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - gendiff-sqlc:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
       - imgrefs:
           requires:
             - checkout
@@ -138,6 +176,13 @@ workflows:
             tags:
               only: /.*/
       - lint-buf:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - lint-sqlc:
           requires:
             - checkout
             - fetch-task
@@ -178,10 +223,13 @@ workflows:
           requires:
             - checkout
             - fetch-task
+            - gendiff-buf
+            - gendiff-sqlc
             - imgrefs
             - lint-buf
             - lint-go
             - lint-js
+            - lint-sqlc
           filters:
             tags:
               only: /.*/
@@ -189,11 +237,14 @@ workflows:
           requires:
             - deps-go
             - deps-js
+            - gendiff-buf
+            - gendiff-sqlc
             - imgbuild-imgpush
             - imgrefs
             - lint-buf
             - lint-go
             - lint-js
+            - lint-sqlc
           filters:
             tags:
               only: /.*/
