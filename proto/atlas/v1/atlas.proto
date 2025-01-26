@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package atlas.v1;
+
+option go_package = "github.com/markormesher/atlas/internal/gen/atlas/v1;atlasv1";
+
+message Place {
+  string id = 1;
+  string name = 2;
+  string country = 3;
+  double lat = 4;
+  double lon = 5;
+}
+
+message GetPlacesRequest {}
+
+message GetPlacesResponse {
+  repeated Place places = 1;
+}
+
+message UpdatePlaceRequest {
+  Place place = 1;
+}
+
+message UpdatePlaceResponse {
+  Place place = 1;
+}
+
+message DeletePlaceRequest {
+  string id = 1;
+}
+
+message DeletePlaceResponse {}
+
+message AuthCheckRequest {}
+
+message AuthCheckResponse {}
+
+service AtlasService {
+  rpc GetPlaces(GetPlacesRequest) returns (GetPlacesResponse);
+  rpc UpdatePlace(UpdatePlaceRequest) returns (UpdatePlaceResponse);
+  rpc DeletePlace(DeletePlaceRequest) returns (DeletePlaceResponse);
+  rpc AuthCheck(AuthCheckRequest) returns (AuthCheckResponse);
+}

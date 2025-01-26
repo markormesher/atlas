@@ -1,0 +1,76 @@
+@use "@picocss/pico";
+
+// fix leaflet/pico conflict
+.leaflet-control > a[role="button"] {
+  padding: 0;
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+#map-status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9000;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.editor-wrapper {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+td input {
+  margin-bottom: 0 !important;
+}
+
+.toast {
+  position: fixed;
+  z-index: 9900;
+  min-width: 240px;
+  height: 40px;
+  right: 15px;
+
+  opacity: 0;
+  transition-duration: 0.3s;
+
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #a0a0a0;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.2);
+
+  .toast-text {
+    height: 38px;
+    line-height: 38px;
+    overflow-x: hidden;
+    padding: 0 5px;
+    font-size: 0.8rem;
+  }
+
+  .toast-progress {
+    height: 2px;
+    background-color: #a0a0a0;
+    transition-duration: 0.1s;
+  }
+
+  &.toast-show {
+    opacity: 1;
+    animation: fadein 0.3s;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
