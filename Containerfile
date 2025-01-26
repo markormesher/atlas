@@ -6,7 +6,7 @@ RUN corepack enable
 COPY ./frontend/package.json ./frontend/pnpm-lock.yaml ./frontend/
 RUN cd frontend && pnpm install --frozen-lockfile
 
-COPY ./frontend ./frontend
+COPY ./frontend ./frontend/
 RUN cd frontend && pnpm build
 
 # --
@@ -26,7 +26,7 @@ FROM gcr.io/distroless/base-debian12@sha256:e9d0321de8927f69ce20e39bfc061343cce3
 WORKDIR /app
 
 LABEL image.registry=ghcr.io
-LABEL image.name=mormesher/atlas
+LABEL image.name=markormesher/atlas
 
 ENV FRONTEND_DIST_PATH=/app/frontend/dist
 COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
