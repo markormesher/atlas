@@ -2,17 +2,27 @@ import React from "react";
 import { ReactElement } from "react";
 import { Editor } from "./editor";
 import { Map } from "./map";
+import { Toaster } from "./toaster";
 
 function App(): ReactElement {
+  let e: ReactElement;
+
   const path = window.location.pathname;
   if (path == "/") {
-    return <Map />;
+    e = <Map />;
   } else if (path == "/edit") {
-    return <Editor />;
+    e = <Editor />;
   } else {
     window.location.assign("/");
-    return <p>Redirecting...</p>;
+    e = <p>Redirecting...</p>;
   }
+
+  return (
+    <>
+      {e}
+      <Toaster />
+    </>
+  );
 }
 
 export { App };

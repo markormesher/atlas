@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createClient } from "@connectrpc/connect";
 import { AtlasService, Place } from "../../gen/atlas/v1/atlas_pb";
+import { toastBus } from "./toaster";
 
 const testPlace: Place = {
   $typeName: "atlas.v1.Place",
@@ -49,6 +50,7 @@ function Map(): ReactElement {
           setStatus(`${placeCount} ${placeWord}; ${countryCount} ${countryWord}`);
         })
         .catch((err) => {
+          toastBus.emit({ sentiment: "error", text: "Failed to load places" });
           setStatus("Failed to load places - check the console");
           console.log(err);
 

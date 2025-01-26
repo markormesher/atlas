@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createClient } from "@connectrpc/connect";
 import { AtlasService, Place } from "../../gen/atlas/v1/atlas_pb";
+import { toastBus } from "./toaster";
 
 function Editor(): ReactElement {
   const zeroId = "00000000-0000-0000-0000-000000000000";
@@ -41,6 +42,7 @@ function Editor(): ReactElement {
         setPlaces(placeMap);
       })
       .catch((err) => {
+        toastBus.emit({ sentiment: "error", text: "Failed to load places" });
         console.log(err);
       });
   }, [reloadTrigger]);
@@ -76,9 +78,11 @@ function Editor(): ReactElement {
     apiClient
       .updatePlace({ place })
       .then(() => {
+        toastBus.emit({ sentiment: "success", text: "Place updated" });
         setReloadTrigger(new Date().getTime());
       })
       .catch((err) => {
+        toastBus.emit({ sentiment: "error", text: "Failed to update place" });
         console.log(err);
       });
   }
@@ -87,9 +91,11 @@ function Editor(): ReactElement {
     apiClient
       .deletePlace({ id })
       .then(() => {
+        toastBus.emit({ sentiment: "success", text: "Place deleted" });
         setReloadTrigger(new Date().getTime());
       })
       .catch((err) => {
+        toastBus.emit({ sentiment: "error", text: "Failed to delete place" });
         console.log(err);
       });
   }
