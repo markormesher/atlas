@@ -5,6 +5,8 @@ import { createClient } from "@connectrpc/connect";
 import { AtlasService, Place } from "../../gen/atlas/v1/atlas_pb";
 import { toastBus } from "./toaster";
 
+type OrderedPlace = Place & { order: number };
+
 function Editor(): ReactElement {
   const zeroId = "00000000-0000-0000-0000-000000000000";
 
@@ -13,7 +15,7 @@ function Editor(): ReactElement {
 
   const [reloadTrigger, setReloadTrigger] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState<boolean | null>(null);
-  const [places, setPlaces] = React.useState<Record<string, Place>>({});
+  const [places, setPlaces] = React.useState<Record<string, OrderedPlace>>({});
 
   React.useEffect(() => {
     apiClient
@@ -29,8 +31,11 @@ function Editor(): ReactElement {
     apiClient
       .getPlaces({})
       .then((res) => {
-        const placeMap: Record<string, Place> = {};
-        res.places.forEach((p) => (placeMap[p.id] = p));
+        const placeMap: Record<string, OrderedPlace> = {};
+        res.places
+          .sort((a, b) => `${a.country}, ${a.name}`.localeCompare(`${b.country}, ${b.name}`))
+          .forEach((p, i) => (placeMap[p.id] = { ...p, order: i }));
+
         placeMap[zeroId] = {
           $typeName: "atlas.v1.Place",
           id: zeroId,
@@ -38,7 +43,9 @@ function Editor(): ReactElement {
           country: "",
           lat: NaN,
           lon: NaN,
+          order: -1,
         };
+
         setPlaces(placeMap);
       })
       .catch((err) => {
@@ -126,7 +133,7 @@ function Editor(): ReactElement {
         </thead>
         <tbody>
           {Object.entries(places)
-            .sort((a, b) => `${a[1].country}, ${a[1].name}`.localeCompare(`${b[1].country}, ${b[1].name}`))
+            .sort((a, b) => a[1].order - b[1].order)
             .map(([id, place]) => {
               const isValid =
                 place.name.length > 0 && place.country.length > 0 && !isNaN(place.lat) && !isNaN(place.lon);
