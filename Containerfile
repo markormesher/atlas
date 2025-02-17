@@ -11,7 +11,7 @@ RUN cd frontend && pnpm build
 
 # --
 
-FROM docker.io/golang:1.23.6@sha256:927112936d6b496ed95f55f362cc09da6e3e624ef868814c56d55bd7323e0959 AS backend-builder
+FROM docker.io/golang:1.24.0@sha256:2b1cbf278ce05a2a310a3d695ebb176420117a8cfcfcc4e5e68a1bef5f6354da AS backend-builder
 WORKDIR /app
 
 COPY ./backend/go.mod ./backend/go.sum ./backend/
