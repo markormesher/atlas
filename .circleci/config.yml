@@ -36,7 +36,7 @@ jobs:
             - ./.go
   deps-js:
     docker:
-      - image: docker.io/node:23.10.0-slim
+      - image: docker.io/node:23.11.0-slim
     steps:
       - attach_workspace:
           at: .
@@ -107,7 +107,7 @@ jobs:
             ./task lint-go
   lint-js:
     docker:
-      - image: docker.io/node:23.10.0-slim
+      - image: docker.io/node:23.11.0-slim
     steps:
       - attach_workspace:
           at: .
