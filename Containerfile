@@ -18,7 +18,7 @@ COPY ./backend/go.mod ./backend/go.sum ./backend/
 RUN cd backend && go mod download
 
 COPY ./backend ./backend
-RUN cd backend && go build -o ./build/main ./cmd
+RUN cd backend && CGO_ENABLED=0 go build -o ./build/main ./cmd
 
 # --
 
