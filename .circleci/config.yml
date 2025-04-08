@@ -89,7 +89,7 @@ jobs:
             - ./**/.imgrefs
   lint-buf:
     docker:
-      - image: docker.io/bufbuild/buf:1.51.0
+      - image: docker.io/bufbuild/buf:1.52.0
     steps:
       - attach_workspace:
           at: .
