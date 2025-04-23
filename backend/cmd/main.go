@@ -49,8 +49,9 @@ func main() {
 			} else {
 				os.Exit(1)
 			}
+		} else {
+			break
 		}
-		break
 	}
 	l.Info("database connectivity okay")
 
@@ -89,8 +90,12 @@ func main() {
 	}
 	mux.PathPrefix("/").Handler(appServer.Handler())
 
-	http.ListenAndServe(
+	err = http.ListenAndServe(
 		"0.0.0.0:8080",
 		h2c.NewHandler(mux, &http2.Server{}),
 	)
+	if err != nil {
+		l.Error("failed to start server", "error", err)
+		os.Exit(1)
+	}
 }

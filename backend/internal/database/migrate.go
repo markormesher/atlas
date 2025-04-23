@@ -79,12 +79,20 @@ func (db *DB) Migrate(ctx context.Context, migrationsDir string) error {
 		}
 
 		if _, err = db.conn.Exec(ctx, string(sqlBytes)); err != nil {
-			tx.Rollback(ctx)
+			rollbackErr := tx.Rollback(ctx)
+			if rollbackErr != nil {
+				return fmt.Errorf("error running migration: %w; error rolling back: %w", err, rollbackErr)
+			}
+
 			return fmt.Errorf("error running migration: %w", err)
 		}
 
 		if _, err = db.conn.Exec(ctx, `INSERT INTO __migration VALUES ( $1 );`, name); err != nil {
-			tx.Rollback(ctx)
+			rollbackErr := tx.Rollback(ctx)
+			if rollbackErr != nil {
+				return fmt.Errorf("error running migration: %w; error rolling back: %w", err, rollbackErr)
+			}
+
 			return fmt.Errorf("error running migration: %w", err)
 		}
 
