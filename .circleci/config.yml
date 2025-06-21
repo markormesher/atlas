@@ -16,8 +16,6 @@ jobs:
     docker:
       - image: cimg/base:2025.06
     steps:
-      - attach_workspace:
-          at: .
       - run:
           command: echo "Done"
   deps-go:
@@ -26,29 +24,39 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys:
+            - deps-go-v5-{{ checksum ".task-meta-cachekey-go" }}
+            - deps-go-v5-
       - run:
           command: |-
-            export GOPATH=$(pwd)/.go
+            export GOPATH=/.go
+            export GOCACHE=/.gocache
             ./task deps-go
-      - persist_to_workspace:
-          root: .
+      - save_cache:
+          key: deps-go-v5-{{ checksum ".task-meta-cachekey-go" }}
           paths:
-            - ./.go
+            - /.go
+            - /.gocache
   deps-js:
     docker:
       - image: docker.io/node:24.2.0-slim
     steps:
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys:
+            - deps-js-v5-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v5-
       - run:
           command: |-
             corepack enable
             ./task deps-js
-      - persist_to_workspace:
-          root: .
+      - save_cache:
+          key: deps-js-v5-{{ checksum ".task-meta-cachekey-js" }}
           paths:
-            - ./node_modules
-            - ./**/node_modules
+            - /usr/local/lib/node_modules
+            - frontend/node_modules
   fetch-task:
     docker:
       - image: ghcr.io/markormesher/task-fetcher:v0.5.18
@@ -85,14 +93,18 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./.imgrefs
-            - ./**/.imgrefs
+            - ./.task-meta-imgrefs
+            - ./**/.task-meta-imgrefs
   lint-buf:
     docker:
       - image: docker.io/bufbuild/buf:1.55.1
     steps:
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys:
+            - deps-buf-v5-{{ checksum ".task-meta-cachekey-buf" }}
+            - deps-buf-v5-
       - run:
           command: ./task lint-buf
   lint-go:
@@ -101,9 +113,14 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys:
+            - deps-go-v5-{{ checksum ".task-meta-cachekey-go" }}
+            - deps-go-v5-
       - run:
           command: |-
-            export GOPATH=$(pwd)/.go
+            export GOPATH=/.go
+            export GOCACHE=/.gocache
             ./task lint-go
   lint-js:
     docker:
@@ -111,6 +128,10 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys:
+            - deps-js-v5-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v5-
       - run:
           command: |-
             corepack enable
@@ -125,8 +146,7 @@ workflows:
             tags:
               only: /.*/
       - fetch-task:
-          requires:
-            - checkout
+          requires: []
           filters:
             tags:
               only: /.*/
