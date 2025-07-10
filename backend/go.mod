@@ -1,6 +1,6 @@
 module github.com/markormesher/atlas
 
-go 1.24.4
+go 1.24.5
 
 require (
 	connectrpc.com/connect v1.18.1
