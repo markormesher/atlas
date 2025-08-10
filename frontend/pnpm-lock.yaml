@@ -20,9 +20,6 @@ importers:
       '@picocss/pico':
         specifier: ^2.0.6
         version: 2.0.6
-      bulma:
-        specifier: ^1.0.3
-        version: 1.0.3
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
@@ -714,9 +711,6 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
-
-  bulma@1.0.3:
-    resolution: {integrity: sha512-9eVXBrXwlU337XUXBjIIq7i88A+tRbJYAjXQjT/21lwam+5tpvKF0R7dCesre9N+HV9c6pzCNEPKrtgvBBes2g==}
 
   call-bind-apply-helpers@1.0.1:
     resolution: {integrity: sha512-BhYE+WDaywFg2TBWYNXAE+8B1ATnThNBqXHP5nQu0jWJdVvY2hvkpyB3qOmtmDePiS5/BDQ8wASEWGMWRG148g==}
@@ -2237,8 +2231,6 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
-
-  bulma@1.0.3: {}
 
   call-bind-apply-helpers@1.0.1:
     dependencies:
