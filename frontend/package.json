@@ -31,7 +31,6 @@
     "@connectrpc/connect": "^2.0.1",
     "@connectrpc/connect-web": "^2.0.1",
     "@picocss/pico": "^2.0.6",
-    "bulma": "^1.0.3",
     "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
