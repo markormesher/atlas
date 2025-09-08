@@ -1,8 +1,8 @@
 import React from "react";
 import { ReactElement } from "react";
-import { Editor } from "./editor";
-import { Map } from "./map";
-import { Toaster } from "./toaster";
+import { Editor } from "./editor.js";
+import { Map } from "./map.js";
+import { Toaster } from "./toaster.js";
 
 function App(): ReactElement {
   let e: ReactElement;

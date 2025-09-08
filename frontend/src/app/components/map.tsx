@@ -4,8 +4,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createClient } from "@connectrpc/connect";
-import { AtlasService, Place } from "../../api_gen/atlas/v1/atlas_pb";
-import { toastBus } from "./toaster";
+import { AtlasService, Place } from "../../api_gen/atlas/v1/atlas_pb.js";
+import { toastBus } from "./toaster.js";
 
 const testPlace: Place = {
   $typeName: "atlas.v1.Place",
