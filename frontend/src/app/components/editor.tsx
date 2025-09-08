@@ -2,8 +2,8 @@ import React from "react";
 import { ReactElement } from "react";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createClient } from "@connectrpc/connect";
-import { AtlasService, Place } from "../../api_gen/atlas/v1/atlas_pb";
-import { toastBus } from "./toaster";
+import { AtlasService, Place } from "../../api_gen/atlas/v1/atlas_pb.js";
+import { toastBus } from "./toaster.js";
 
 type OrderedPlace = Place & { order: number };
 
