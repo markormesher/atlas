@@ -14,7 +14,7 @@
   "devDependencies": {
     "@bufbuild/buf": "^1.49.0",
     "@bufbuild/protoc-gen-es": "^2.2.3",
-    "@markormesher/eslint-config": "^0.2.0",
+    "@markormesher/eslint-config": "github:markormesher/eslint-config#semver:^0.2.0",
     "@tsconfig/strictest": "^2.0.5",
     "@types/leaflet": "^1.9.16",
     "@types/node": "^22.10.7",
