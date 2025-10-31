@@ -38,15 +38,15 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-go-v6-{{ checksum ".task-meta-cachekey-go" }}
-            - deps-go-v6-
+            - deps-go-v7-{{ checksum ".task-meta-cachekey-go" }}
+            - deps-go-v7-
       - run:
           command: |-
             export GOPATH=/.go
             export GOCACHE=/.gocache
             ./task deps-go
       - save_cache:
-          key: deps-go-v6-{{ checksum ".task-meta-cachekey-go" }}
+          key: deps-go-v7-{{ checksum ".task-meta-cachekey-go" }}
           paths:
             - /.go
             - /.gocache
@@ -58,14 +58,14 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
-            - deps-js-v6-
+            - deps-js-v7-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v7-
       - run:
           command: |-
-            corepack enable
+            npm install -g --force yarn pnpm
             ./task deps-js
       - save_cache:
-          key: deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
+          key: deps-js-v7-{{ checksum ".task-meta-cachekey-js" }}
           paths:
             - /usr/local/lib/node_modules
             - frontend/node_modules
@@ -115,8 +115,8 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-buf-v6-{{ checksum ".task-meta-cachekey-buf" }}
-            - deps-buf-v6-
+            - deps-buf-v7-{{ checksum ".task-meta-cachekey-buf" }}
+            - deps-buf-v7-
       - run:
           command: ./task lint-buf
   lint-go:
@@ -127,8 +127,8 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-go-v6-{{ checksum ".task-meta-cachekey-go" }}
-            - deps-go-v6-
+            - deps-go-v7-{{ checksum ".task-meta-cachekey-go" }}
+            - deps-go-v7-
       - run:
           command: |-
             export GOPATH=/.go
@@ -142,11 +142,11 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
-            - deps-js-v6-
+            - deps-js-v7-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v7-
       - run:
           command: |-
-            corepack enable
+            npm install -g --force yarn pnpm
             ./task lint-js
 workflows:
   version: 2
