@@ -52,7 +52,7 @@ jobs:
             - /.gocache
   deps-js:
     docker:
-      - image: docker.io/node:24.11.0-slim
+      - image: docker.io/node:24.11.1-slim@sha256:1df475b6befed0f5b06f8c5d806eebd086fbd5944d8511da3957057d5ff74259
     steps:
       - attach_workspace:
           at: .
@@ -136,7 +136,7 @@ jobs:
             ./task lint-go
   lint-js:
     docker:
-      - image: docker.io/node:24.11.0-slim
+      - image: docker.io/node:24.11.1-slim@sha256:1df475b6befed0f5b06f8c5d806eebd086fbd5944d8511da3957057d5ff74259
     steps:
       - attach_workspace:
           at: .
