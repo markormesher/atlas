@@ -64,8 +64,8 @@ importers:
         specifier: 3.4.2
         version: 3.4.2
       sass:
-        specifier: 1.83.4
-        version: 1.83.4
+        specifier: 1.94.2
+        version: 1.94.2
       ts-proto:
         specifier: 2.6.1
         version: 2.6.1
@@ -74,7 +74,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 6.4.1
-        version: 6.4.1(@types/node@22.10.7)(sass@1.83.4)
+        version: 6.4.1(@types/node@22.10.7)(sass@1.94.2)
 
 packages:
 
@@ -1498,8 +1498,8 @@ packages:
     resolution: {integrity: sha512-x/+Cz4YrimQxQccJf5mKEbIa1NzeCRNI5Ecl/ekmlYaampdNLPalVyIcCZNNH3MvmqBugV5TMYZXv0ljslUlaw==}
     engines: {node: '>= 0.4'}
 
-  sass@1.83.4:
-    resolution: {integrity: sha512-B1bozCeNQiOgDcLd33e2Cs2U60wZwjUUXzh900ZyQF5qUasvMdDZYbQ566LJu7cqR+sAHlAfO6RMkaID5s6qpA==}
+  sass@1.94.2:
+    resolution: {integrity: sha512-N+7WK20/wOr7CzA2snJcUSSNTCzeCGUTFY3OgeQP3mZ1aj9NMQ0mSTXwlrnd89j33zzQJGqIN52GIOmYrfq46A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -3246,7 +3246,7 @@ snapshots:
       es-errors: 1.3.0
       is-regex: 1.2.1
 
-  sass@1.83.4:
+  sass@1.94.2:
     dependencies:
       chokidar: 4.0.3
       immutable: 5.0.3
@@ -3470,7 +3470,7 @@ snapshots:
 
   uuid@13.0.0: {}
 
-  vite@6.4.1(@types/node@22.10.7)(sass@1.83.4):
+  vite@6.4.1(@types/node@22.10.7)(sass@1.94.2):
     dependencies:
       esbuild: 0.25.11
       fdir: 6.5.0(picomatch@4.0.3)
@@ -3481,7 +3481,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.10.7
       fsevents: 2.3.3
-      sass: 1.83.4
+      sass: 1.94.2
 
   which-boxed-primitive@1.1.1:
     dependencies:
