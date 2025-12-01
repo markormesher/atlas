@@ -20,7 +20,7 @@
     "@types/node": "22.19.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "eslint": "9.18.0",
+    "eslint": "9.39.1",
     "prettier": "3.7.1",
     "sass": "1.94.2",
     "ts-proto": "2.8.3",
