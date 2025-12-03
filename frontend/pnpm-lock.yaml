@@ -40,8 +40,8 @@ importers:
         specifier: 2.10.1
         version: 2.10.1(@bufbuild/protobuf@2.10.1)
       '@markormesher/eslint-config':
-        specifier: github:markormesher/eslint-config#semver:v0.3.9
-        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/dfa78ad08960e65d6bc7c8e6e7bda572b6d5d154(eslint@9.39.1)(typescript@5.9.3)
+        specifier: github:markormesher/eslint-config#semver:v0.3.10
+        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/24b1ae1e0af0c9d1eb60c1b814ec2f49a3eb443c(eslint@9.39.1)(typescript@5.9.3)
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -401,10 +401,6 @@ packages:
     resolution: {integrity: sha512-Kr+LPIUVKz2qkx1HAMH8q1q6azbqBAsXJUxBl/ODDuVPX45Z9DfwB8tPjTi6nNZ8BuM3nbJxC5zCAg5elnBUTQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/js@9.18.0':
-    resolution: {integrity: sha512-fK6L7rxcq6/z+AaQMtiFTkvbHkBLNlwyRxHpKawP0x3u9+NC6MQTnFW+AdpwC6gfHTW0051cokQgtTN2FqlxQA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@eslint/js@9.39.1':
     resolution: {integrity: sha512-S26Stp4zCy88tH94QbBv3XCuzRQiZ9yXofEILmglYTh/Ug/a9/umqvgFtYBAo3Lp0nsI/5/qH1CCrbdK3AP1Tw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -453,8 +449,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/dfa78ad08960e65d6bc7c8e6e7bda572b6d5d154':
-    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/dfa78ad08960e65d6bc7c8e6e7bda572b6d5d154}
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/24b1ae1e0af0c9d1eb60c1b814ec2f49a3eb443c':
+    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/24b1ae1e0af0c9d1eb60c1b814ec2f49a3eb443c}
     version: 0.0.0
     peerDependencies:
       eslint: '>=8.0.0 <10.0.0'
@@ -2168,8 +2164,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@eslint/js@9.18.0': {}
-
   '@eslint/js@9.39.1': {}
 
   '@eslint/object-schema@2.1.7': {}
@@ -2211,9 +2205,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/dfa78ad08960e65d6bc7c8e6e7bda572b6d5d154(eslint@9.39.1)(typescript@5.9.3)':
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/24b1ae1e0af0c9d1eb60c1b814ec2f49a3eb443c(eslint@9.39.1)(typescript@5.9.3)':
     dependencies:
-      '@eslint/js': 9.18.0
+      '@eslint/js': 9.39.1
       '@typescript-eslint/eslint-plugin': 8.43.0(@typescript-eslint/parser@8.43.0(eslint@9.39.1)(typescript@5.9.3))(eslint@9.39.1)(typescript@5.9.3)
       '@typescript-eslint/parser': 8.43.0(eslint@9.39.1)(typescript@5.9.3)
       eslint: 9.39.1
