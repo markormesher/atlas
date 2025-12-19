@@ -40,8 +40,8 @@ importers:
         specifier: 2.10.2
         version: 2.10.2(@bufbuild/protobuf@2.10.2)
       '@markormesher/eslint-config':
-        specifier: github:markormesher/eslint-config#semver:v0.3.16
-        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/b20176d86b6158bab89f0b17d7d72ae64a360072(eslint@9.39.2)(typescript@5.9.3)
+        specifier: github:markormesher/eslint-config#semver:v0.3.17
+        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/108e54aa3140178888b84239c98f5e6e5eb8657e(eslint@9.39.2)(typescript@5.9.3)
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -449,8 +449,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/b20176d86b6158bab89f0b17d7d72ae64a360072':
-    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/b20176d86b6158bab89f0b17d7d72ae64a360072}
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/108e54aa3140178888b84239c98f5e6e5eb8657e':
+    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/108e54aa3140178888b84239c98f5e6e5eb8657e}
     version: 0.0.0
     peerDependencies:
       eslint: '>=8.0.0 <10.0.0'
@@ -2205,7 +2205,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/b20176d86b6158bab89f0b17d7d72ae64a360072(eslint@9.39.2)(typescript@5.9.3)':
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/108e54aa3140178888b84239c98f5e6e5eb8657e(eslint@9.39.2)(typescript@5.9.3)':
     dependencies:
       '@eslint/js': 9.39.2
       '@typescript-eslint/eslint-plugin': 8.43.0(@typescript-eslint/parser@8.43.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
