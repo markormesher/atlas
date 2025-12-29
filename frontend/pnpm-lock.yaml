@@ -41,7 +41,7 @@ importers:
         version: 2.10.2(@bufbuild/protobuf@2.10.2)
       '@markormesher/eslint-config':
         specifier: github:markormesher/eslint-config#semver:v0.3.18
-        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/6cb16a7c395c0a4351ee18a4b68d83f79c4aa764(eslint@9.39.2)(typescript@5.9.3)
+        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/6c96dcd1932d23f5812fb71001e558452ba69df9(eslint@9.39.2)(typescript@5.9.3)
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -67,8 +67,8 @@ importers:
         specifier: 1.97.1
         version: 1.97.1
       ts-proto:
-        specifier: 2.10.0
-        version: 2.10.0
+        specifier: 2.10.1
+        version: 2.10.1
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -449,8 +449,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/6cb16a7c395c0a4351ee18a4b68d83f79c4aa764':
-    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/6cb16a7c395c0a4351ee18a4b68d83f79c4aa764}
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/6c96dcd1932d23f5812fb71001e558452ba69df9':
+    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/6c96dcd1932d23f5812fb71001e558452ba69df9}
     version: 0.0.0
     peerDependencies:
       eslint: '>=8.0.0 <10.0.0'
@@ -1748,8 +1748,8 @@ packages:
   ts-proto-descriptors@2.1.0:
     resolution: {integrity: sha512-S5EZYEQ6L9KLFfjSRpZWDIXDV/W7tAj8uW7pLsihIxyr62EAVSiKuVPwE8iWnr849Bqa53enex1jhDUcpgquzA==}
 
-  ts-proto@2.10.0:
-    resolution: {integrity: sha512-GHzqUHCSXorbFi6Qcm5yKOApiq/EQb/+uP+7EI5L1Ze66GVljBGaEjapauRjY/LAN+uWMnii6+Kzh1OJLohiVA==}
+  ts-proto@2.10.1:
+    resolution: {integrity: sha512-4sOE1hCs0uobJgdRCtcEwdbc8MAyKP+LJqUIKxZIiKac0rPBlVKsRGEGo2oQ1MnKA2Wwk0KuGP2POkiCwPtebw==}
     hasBin: true
 
   tsconfig-paths@3.15.0:
@@ -2205,7 +2205,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/6cb16a7c395c0a4351ee18a4b68d83f79c4aa764(eslint@9.39.2)(typescript@5.9.3)':
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/6c96dcd1932d23f5812fb71001e558452ba69df9(eslint@9.39.2)(typescript@5.9.3)':
     dependencies:
       '@eslint/js': 9.39.2
       '@typescript-eslint/eslint-plugin': 8.43.0(@typescript-eslint/parser@8.43.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
@@ -3716,7 +3716,7 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 2.10.2
 
-  ts-proto@2.10.0:
+  ts-proto@2.10.1:
     dependencies:
       '@bufbuild/protobuf': 2.10.2
       case-anything: 2.1.13
