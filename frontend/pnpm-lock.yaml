@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@bufbuild/protobuf':
         specifier: ^2.2.3
-        version: 2.10.2
+        version: 2.11.0
       '@connectrpc/connect':
         specifier: ^2.0.1
-        version: 2.1.1(@bufbuild/protobuf@2.10.2)
+        version: 2.1.1(@bufbuild/protobuf@2.11.0)
       '@connectrpc/connect-web':
         specifier: ^2.0.1
-        version: 2.1.1(@bufbuild/protobuf@2.10.2)(@connectrpc/connect@2.1.1(@bufbuild/protobuf@2.10.2))
+        version: 2.1.1(@bufbuild/protobuf@2.11.0)(@connectrpc/connect@2.1.1(@bufbuild/protobuf@2.11.0))
       '@picocss/pico':
         specifier: ^2.0.6
         version: 2.1.1
@@ -37,8 +37,8 @@ importers:
         specifier: 1.64.0
         version: 1.64.0
       '@bufbuild/protoc-gen-es':
-        specifier: 2.10.2
-        version: 2.10.2(@bufbuild/protobuf@2.10.2)
+        specifier: 2.11.0
+        version: 2.11.0(@bufbuild/protobuf@2.11.0)
       '@markormesher/eslint-config':
         specifier: github:markormesher/eslint-config#semver:v0.3.25
         version: https://codeload.github.com/markormesher/eslint-config/tar.gz/232a6ea9acdbeaa924cc15c6910e15dae31eb1ff(eslint@9.39.2)(typescript@5.9.3)
@@ -192,21 +192,21 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
-  '@bufbuild/protobuf@2.10.2':
-    resolution: {integrity: sha512-uFsRXwIGyu+r6AMdz+XijIIZJYpoWeYzILt5yZ2d3mCjQrWUTVpVD9WL/jZAbvp+Ed04rOhrsk7FiTcEDseB5A==}
+  '@bufbuild/protobuf@2.11.0':
+    resolution: {integrity: sha512-sBXGT13cpmPR5BMgHE6UEEfEaShh5Ror6rfN3yEK5si7QVrtZg8LEPQb0VVhiLRUslD2yLnXtnRzG035J/mZXQ==}
 
-  '@bufbuild/protoc-gen-es@2.10.2':
-    resolution: {integrity: sha512-vbjPsuofbtZwZXuOP7Y16CQsxrwCjuRONffmJSBEhoC7PQu/Cabp0+Fu/poLPm9CNM0tDCQA0xvgobgudaEYxQ==}
+  '@bufbuild/protoc-gen-es@2.11.0':
+    resolution: {integrity: sha512-VzQuwEQDXipbZ1soWUuAWm1Z0C3B/IDWGeysnbX6ogJ6As91C2mdvAND/ekQ4YIWgen4d5nqLfIBOWLqCCjYUA==}
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
-      '@bufbuild/protobuf': 2.10.2
+      '@bufbuild/protobuf': 2.11.0
     peerDependenciesMeta:
       '@bufbuild/protobuf':
         optional: true
 
-  '@bufbuild/protoplugin@2.10.2':
-    resolution: {integrity: sha512-RAWVs9tCzRqSS3tUtaFhOcauOAazCrm7tlGh0WHFq/44n5Fj6YgefdlZEPIaAK6VAA+FdOoFgtOJK2Ji5U24pw==}
+  '@bufbuild/protoplugin@2.11.0':
+    resolution: {integrity: sha512-lyZVNFUHArIOt4W0+dwYBe5GBwbKzbOy8ObaloEqsw9Mmiwv2O48TwddDoHN4itylC+BaEGqFdI1W8WQt2vWJQ==}
 
   '@connectrpc/connect-web@2.1.1':
     resolution: {integrity: sha512-J8317Q2MaFRCT1jzVR1o06bZhDIBmU0UAzWx6xOIXzOq8+k71/+k7MUF7AwcBUX+34WIvbm5syRgC5HXQA8fOg==}
@@ -2022,32 +2022,32 @@ snapshots:
       '@bufbuild/buf-win32-arm64': 1.64.0
       '@bufbuild/buf-win32-x64': 1.64.0
 
-  '@bufbuild/protobuf@2.10.2': {}
+  '@bufbuild/protobuf@2.11.0': {}
 
-  '@bufbuild/protoc-gen-es@2.10.2(@bufbuild/protobuf@2.10.2)':
+  '@bufbuild/protoc-gen-es@2.11.0(@bufbuild/protobuf@2.11.0)':
     dependencies:
-      '@bufbuild/protoplugin': 2.10.2
+      '@bufbuild/protoplugin': 2.11.0
     optionalDependencies:
-      '@bufbuild/protobuf': 2.10.2
+      '@bufbuild/protobuf': 2.11.0
     transitivePeerDependencies:
       - supports-color
 
-  '@bufbuild/protoplugin@2.10.2':
+  '@bufbuild/protoplugin@2.11.0':
     dependencies:
-      '@bufbuild/protobuf': 2.10.2
+      '@bufbuild/protobuf': 2.11.0
       '@typescript/vfs': 1.6.2(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
 
-  '@connectrpc/connect-web@2.1.1(@bufbuild/protobuf@2.10.2)(@connectrpc/connect@2.1.1(@bufbuild/protobuf@2.10.2))':
+  '@connectrpc/connect-web@2.1.1(@bufbuild/protobuf@2.11.0)(@connectrpc/connect@2.1.1(@bufbuild/protobuf@2.11.0))':
     dependencies:
-      '@bufbuild/protobuf': 2.10.2
-      '@connectrpc/connect': 2.1.1(@bufbuild/protobuf@2.10.2)
+      '@bufbuild/protobuf': 2.11.0
+      '@connectrpc/connect': 2.1.1(@bufbuild/protobuf@2.11.0)
 
-  '@connectrpc/connect@2.1.1(@bufbuild/protobuf@2.10.2)':
+  '@connectrpc/connect@2.1.1(@bufbuild/protobuf@2.11.0)':
     dependencies:
-      '@bufbuild/protobuf': 2.10.2
+      '@bufbuild/protobuf': 2.11.0
 
   '@esbuild/aix-ppc64@0.27.2':
     optional: true
@@ -3714,11 +3714,11 @@ snapshots:
 
   ts-proto-descriptors@2.1.0:
     dependencies:
-      '@bufbuild/protobuf': 2.10.2
+      '@bufbuild/protobuf': 2.11.0
 
   ts-proto@2.11.0:
     dependencies:
-      '@bufbuild/protobuf': 2.10.2
+      '@bufbuild/protobuf': 2.11.0
       case-anything: 2.1.13
       ts-poet: 6.12.0
       ts-proto-descriptors: 2.1.0
