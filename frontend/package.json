@@ -17,7 +17,7 @@
     "@markormesher/eslint-config": "github:markormesher/eslint-config#semver:v0.3.30",
     "@tsconfig/strictest": "2.0.8",
     "@types/leaflet": "1.9.21",
-    "@types/node": "24.10.10",
+    "@types/node": "24.10.11",
     "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.2",
