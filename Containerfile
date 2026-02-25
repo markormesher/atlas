@@ -1,4 +1,4 @@
-FROM docker.io/node:24.13.1-slim@sha256:a81a03dd965b4052269a57fac857004022b522a4bf06e7a739e25e18bce45af2 AS frontend-builder
+FROM docker.io/node:24.14.0-slim@sha256:101e6cd9ad96823fbe088294e4b99c9ef4e689ca5cd989f692e0cac75d902f8f AS frontend-builder
 WORKDIR /app
 
 RUN corepack enable
