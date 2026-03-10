@@ -109,7 +109,7 @@ jobs:
             - ./**/.task-meta-imgrefs
   lint-buf:
     docker:
-      - image: docker.io/bufbuild/buf:1.66.0@sha256:7d7576db1713fd612b016beddb71f86846c2904a85b9d3be247627b7e5f52e57
+      - image: docker.io/bufbuild/buf:1.66.1@sha256:28e7d2ab6fa1a3944acd3e8328f81ab203d82ea69c91f3d2c691b85b56e661af
     steps:
       - attach_workspace:
           at: .
