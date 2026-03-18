@@ -1,4 +1,4 @@
-FROM docker.io/node:24.14.0-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb AS frontend-builder
+FROM docker.io/node:24.14.0-slim@sha256:d8e448a56fc63242f70026718378bd4b00f8c82e78d20eefb199224a4d8e33d8 AS frontend-builder
 WORKDIR /app
 
 RUN corepack enable
@@ -11,7 +11,7 @@ RUN cd frontend && pnpm build
 
 # --
 
-FROM docker.io/golang:1.26.1@sha256:c7e98cc0fd4dfb71ee7465fee6c9a5f079163307e4bf141b336bb9dae00159a5 AS backend-builder
+FROM docker.io/golang:1.26.1@sha256:c42e4d75186af6a44eb4159dcfac758ef1c05a7011a0052fe8a8df016d8e8fb9 AS backend-builder
 WORKDIR /app
 
 ARG CGO_ENABLED=0
@@ -24,7 +24,7 @@ RUN cd backend && go build -o ./build/main ./cmd
 
 # --
 
-FROM ghcr.io/markormesher/scratch:v0.4.14@sha256:6212e9b38cc40ad4520f39a4043ac3f7bd12438449356311b4fa327cabce7db0
+FROM ghcr.io/markormesher/scratch:v0.4.15@sha256:f97d1a18fe75f78865710c3624eb025a960527841e9e9f37fafbefe95e7ce489
 WORKDIR /app
 
 ENV FRONTEND_DIST_PATH=/app/frontend/dist
