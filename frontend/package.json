@@ -8,7 +8,7 @@
     "dev": "vite build --watch",
     "build": "tsc && vite build",
     "lint": "eslint ./src && prettier -c ./src/**/*.css",
-    "lint-fix": "eslint --fix ./src && prettier --write ./src/**/*.css"
+    "lintfix": "eslint --fix ./src && prettier --write ./src/**/*.css"
   },
   "packageManager": "pnpm@10.32.1",
   "devDependencies": {

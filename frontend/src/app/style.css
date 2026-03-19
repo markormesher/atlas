@@ -1,7 +1,7 @@
 @import "@picocss/pico";
 
 /* fix leaflet/pico conflict */
-.leaflet-control>a[role="button"] {
+.leaflet-control > a[role="button"] {
   padding: 0;
 }
 
