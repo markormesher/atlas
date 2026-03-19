@@ -87,7 +87,7 @@ tasks:
             exit 1
           fi
 
-          export BUILDX_GIT_INFO=1
+          export BUILDX_GIT_INFO=0
 
           opts=(
           	-f "Containerfile"
@@ -136,7 +136,7 @@ tasks:
             exit 1
           fi
 
-          export BUILDX_GIT_INFO=1
+          export BUILDX_GIT_INFO=0
 
           if [[ -f .task-meta-imgrefs ]]; then
             cat .task-meta-imgrefs | (grep -v "^localhost" || :) | while read tag; do
