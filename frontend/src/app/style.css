@@ -1,6 +1,6 @@
-@use "@picocss/pico";
+@import "@picocss/pico";
 
-// fix leaflet/pico conflict
+/* fix leaflet/pico conflict */
 .leaflet-control > a[role="button"] {
   padding: 0;
 }
@@ -70,6 +70,7 @@ td input {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
