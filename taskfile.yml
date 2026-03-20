@@ -270,6 +270,7 @@ tasks:
     cmds:
       - task: lintfix-buf-proto
       - task: lintfix-go-backend
+      - task: lintfix-js-frontend
   lintfix-buf:
     cmds:
       - task: lintfix-buf-proto
@@ -284,3 +285,10 @@ tasks:
     dir: '{{.ROOT_DIR}}/backend'
     cmds:
       - cmd: gofmt -s -w .
+  lintfix-js:
+    cmds:
+      - task: lintfix-js-frontend
+  lintfix-js-frontend:
+    dir: '{{.ROOT_DIR}}/frontend'
+    cmds:
+      - cmd: pnpm lintfix
