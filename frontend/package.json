@@ -23,7 +23,7 @@
     "eslint": "9.39.4",
     "prettier": "3.8.1",
     "sass": "1.98.0",
-    "ts-proto": "2.11.5",
+    "ts-proto": "2.11.6",
     "typescript": "5.9.3",
     "vite": "8.0.2"
   },
