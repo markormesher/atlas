@@ -40,8 +40,8 @@ importers:
         specifier: 2.11.0
         version: 2.11.0(@bufbuild/protobuf@2.11.0)
       '@markormesher/eslint-config':
-        specifier: github:markormesher/eslint-config#semver:v0.5.19
-        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/02486127c4d47b0e0b4833c25a236da13d55a55b(eslint@9.39.4)(typescript@5.9.3)
+        specifier: github:markormesher/eslint-config#semver:v0.5.20
+        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/023c9889d459ad49ea37447d39ca522340cdaa4a(eslint@9.39.4)(typescript@5.9.3)
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -298,8 +298,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/02486127c4d47b0e0b4833c25a236da13d55a55b':
-    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/02486127c4d47b0e0b4833c25a236da13d55a55b}
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/023c9889d459ad49ea37447d39ca522340cdaa4a':
+    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/023c9889d459ad49ea37447d39ca522340cdaa4a}
     version: 0.0.0
     peerDependencies:
       eslint: ^9.0.0
@@ -2036,7 +2036,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/02486127c4d47b0e0b4833c25a236da13d55a55b(eslint@9.39.4)(typescript@5.9.3)':
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/023c9889d459ad49ea37447d39ca522340cdaa4a(eslint@9.39.4)(typescript@5.9.3)':
     dependencies:
       '@eslint/js': 9.39.4
       '@typescript-eslint/eslint-plugin': 8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3)
