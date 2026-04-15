@@ -1,12 +1,9 @@
 {
   "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "rootDir": "./src",
     "noEmit": true,
-    "jsx": "react",
-    "baseUrl": "./"
+    "jsx": "react"
   },
   "include": [
     "./src/**/*.ts",
