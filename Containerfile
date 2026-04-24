@@ -24,7 +24,7 @@ RUN cd backend && go build -o ./build/main ./cmd
 
 # --
 
-FROM ghcr.io/markormesher/scratch:v0.4.16@sha256:1a355ac2194827c523122768cf52a9151c5afe32432db0f6b12bf6f594620243
+FROM ghcr.io/markormesher/scratch:v0.4.17@sha256:5bd7dc42149c5886bca329a551afa544e6336adc3de471d0be7b0f1a9d4638f7
 WORKDIR /app
 
 ENV FRONTEND_DIST_PATH=/app/frontend/dist
