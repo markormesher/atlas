@@ -303,7 +303,7 @@ packages:
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
   '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/68a48e9aeb05d7f5ea976d502576d024fa3f51c6':
-    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/68a48e9aeb05d7f5ea976d502576d024fa3f51c6}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/68a48e9aeb05d7f5ea976d502576d024fa3f51c6}
     version: 0.0.0
     peerDependencies:
       eslint: ^9.0.0
