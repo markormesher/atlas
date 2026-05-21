@@ -15,8 +15,6 @@ import (
 	"github.com/markormesher/atlas/internal/database"
 	"github.com/markormesher/atlas/internal/logging"
 	"github.com/markormesher/atlas/internal/spa"
-	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
 )
 
 var l = logging.Logger
@@ -90,10 +88,7 @@ func main() {
 	}
 	mux.PathPrefix("/").Handler(appServer.Handler())
 
-	err = http.ListenAndServe(
-		"0.0.0.0:8080",
-		h2c.NewHandler(mux, &http2.Server{}),
-	)
+	err = http.ListenAndServe("0.0.0.0:8080", mux)
 	if err != nil {
 		l.Error("failed to start server", "error", err)
 		os.Exit(1)
