@@ -31,10 +31,10 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs:
-      - img-build-push
       - check-buf
       - check-go
       - check-js
+      - img-build-push
     container:
       image: docker.io/busybox:1.37.0
     steps:
