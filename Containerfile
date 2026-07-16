@@ -11,7 +11,7 @@ RUN cd frontend && pnpm build
 
 # --
 
-FROM docker.io/golang:1.26.5@sha256:079e59808d2d252516e27e3f3a9c003740dee7f75e55aa71528766d52bcfc16a AS backend-builder
+FROM docker.io/golang:1.26.5@sha256:ae5a2316d12f3e78fd99177dad452e6ad4f240af2d71d57b480c3477f250fec6 AS backend-builder
 WORKDIR /app
 
 ARG CGO_ENABLED=0
