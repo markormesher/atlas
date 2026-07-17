@@ -73,8 +73,8 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
       vite:
-        specifier: 8.1.4
-        version: 8.1.4(@types/node@24.13.3)(sass@1.101.0)
+        specifier: 8.1.5
+        version: 8.1.5(@types/node@24.13.3)(sass@1.101.0)
 
 packages:
 
@@ -303,7 +303,7 @@ packages:
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
   '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/9bc265746e230e869324aef975bf7b9eecd00c8c':
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/9bc265746e230e869324aef975bf7b9eecd00c8c}
+    resolution: {gitHosted: true, integrity: sha512-ax/mps+62hsO9+hxMTIRmQYiZN75FbIGMsHpiLgOXmSdXDaQQQY5pL2UUKyVBhXa/VGIZFTzgtpyjvU+FI4zGg==, tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/9bc265746e230e869324aef975bf7b9eecd00c8c}
     version: 0.0.0
     peerDependencies:
       eslint: ^9.0.0
@@ -1713,8 +1713,8 @@ packages:
     resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
     hasBin: true
 
-  vite@8.1.4:
-    resolution: {integrity: sha512-bTT9PsdWO+MQMNG9ZXIP/qM9wGh37DFxTV/sPq9cFpHr3w4jkgef032PkAL9jAqhk3Nz8NQw3O8n6/xFkqO4QQ==}
+  vite@8.1.5:
+    resolution: {integrity: sha512-7ULLwsCdYx/nRyrpiEwvqb5TFHrMVZyBt+rg/OAXT7rgj/z+DtTDyKFeLAdDkubDVDKD8jOsndmy7m55XcfUsw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3640,7 +3640,7 @@ snapshots:
 
   uuid@14.0.1: {}
 
-  vite@8.1.4(@types/node@24.13.3)(sass@1.101.0):
+  vite@8.1.5(@types/node@24.13.3)(sass@1.101.0):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.5
