@@ -6,7 +6,7 @@ jobs:
   check-buf:
     runs-on: ubuntu-latest
     container:
-      image: docker.io/bufbuild/buf:1.71.0@sha256:7f3e3dfb8650f39878625bbc9f2016a51a781693b209165671d5a61d11c74992
+      image: docker.io/bufbuild/buf:1.72.0@sha256:65bd496a89c762ad7151ca9e7d885a45dacb3671a8e8ec39738b9f844d3405ea
     steps:
       - uses: markormesher/ci-resources/setup@c733feb84c0204cdc0bd46f6f8ca557209bb5c33 # v0.8.0
       - run: ./task lint-buf
