@@ -47,6 +47,7 @@ tasks:
     dir: '{{.ROOT_DIR}}/frontend'
     cmds:
       - cmd: pnpm install --frozen-lockfile
+      - cmd: pnpm peers check
   gen:
     cmds:
       - task: gen-buf-proto
