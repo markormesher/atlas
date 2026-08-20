@@ -31,7 +31,7 @@ importers:
         version: 19.2.8(react@19.2.8)
       uuid:
         specifier: ^14.0.0
-        version: 14.0.1
+        version: 14.0.2
     devDependencies:
       '@bufbuild/buf':
         specifier: 1.72.0
@@ -1677,8 +1677,8 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  uuid@14.0.1:
-    resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
+  uuid@14.0.2:
+    resolution: {integrity: sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ==}
     hasBin: true
 
   vite@8.2.1:
@@ -3568,7 +3568,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  uuid@14.0.1: {}
+  uuid@14.0.2: {}
 
   vite@8.2.1(@types/node@24.13.3)(sass@1.102.0):
     dependencies:
