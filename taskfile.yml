@@ -8,61 +8,253 @@ includes:
 tasks:
   cachekey:
     cmds:
-      - cmd: rm -f "{{.ROOT_DIR}}/.task-meta-cachekey"*
-      - task: cachekey-go-backend
-      - task: cachekey-js-frontend
-  cachekey-go:
+      - task: cachekey-backend-go
+      - task: cachekey-frontend-js
+  cachekey-backend:
     cmds:
-      - task: cachekey-go-backend
-  cachekey-go-backend:
+      - task: cachekey-backend-go
+  cachekey-backend-go:
     dir: '{{.ROOT_DIR}}/backend'
+    generates:
+      - .task-meta-cache-key
     cmds:
-      - cmd: sha256sum go.mod | awk '{print $1}' >> "{{.ROOT_DIR}}/.task-meta-cachekey-go"
-      - cmd: if [[ -f go.sum ]]; then sha256sum go.sum | awk '{print $1}' >> "{{.ROOT_DIR}}/.task-meta-cachekey-go"; fi
-  cachekey-js:
+      - cmd: |-
+          if [[ -n ${CI:-} ]]; then
+            if [[ -n ${FORGEJO_REPOSITORY:-} ]]; then
+              PROJECT=$(echo "$FORGEJO_REPOSITORY" | tr -dc '[[a-z0-9]]')
+            elif [[ -n ${GITHUB_REPOSITORY:-} ]]; then
+              PROJECT=$(echo "$GITHUB_REPOSITORY" | tr -dc '[[a-z0-9]]')
+            else
+              PROJECT="noproject"
+            fi
+
+            DEPS_SHA=$(cat go.mod | sha256sum | awk '{ print $1 }')
+
+            if [[ -f go.sum ]]; then
+              LOCK_SHA=$(cat go.sum | sha256sum | awk '{ print $1 }')
+            else
+              LOCK_SHA="nolock"
+            fi
+
+            echo "${PROJECT}-go-v1/${DEPS_SHA}/${LOCK_SHA}" > .task-meta-cache-key
+          fi
+  cachekey-frontend:
     cmds:
-      - task: cachekey-js-frontend
-  cachekey-js-frontend:
+      - task: cachekey-frontend-js
+  cachekey-frontend-js:
     dir: '{{.ROOT_DIR}}/frontend'
+    generates:
+      - .task-meta-cache-key
     cmds:
-      - cmd: sha256sum package.json | awk '{print $1}' >> "{{.ROOT_DIR}}/.task-meta-cachekey-js"
-      - cmd: if [[ -f pnpm-lock.yaml ]]; then sha256sum pnpm-lock.yaml | awk '{print $1}' >> "{{.ROOT_DIR}}/.task-meta-cachekey-js"; fi
-      - cmd: if [[ -f yarn.lock ]]; then sha256sum yarn.lock | awk '{print $1}' >> "{{.ROOT_DIR}}/.task-meta-cachekey-js"; fi
+      - cmd: |-
+          if [[ -n ${CI:-} ]]; then
+            if [[ -n ${FORGEJO_REPOSITORY:-} ]]; then
+              PROJECT=$(echo "$FORGEJO_REPOSITORY" | tr -dc '[[a-z0-9]]')
+            elif [[ -n ${GITHUB_REPOSITORY:-} ]]; then
+              PROJECT=$(echo "$GITHUB_REPOSITORY" | tr -dc '[[a-z0-9]]')
+            else
+              PROJECT="noproject"
+            fi
+
+            DEPS_SHA=$(cat package.json | sha256sum | awk '{ print $1 }')
+
+            if [[ -f pnpm-lock.yaml ]]; then
+              LOCK_SHA=$(cat pnpm-lock.yaml | sha256sum | awk '{ print $1 }')
+            elif [[ -f yarn.lock ]]; then
+              LOCK_SHA=$(cat yarn.lock | sha256sum | awk '{ print $1 }')
+            else
+              LOCK_SHA="nolock"
+            fi
+
+            echo "${PROJECT}-js-v1/${DEPS_SHA}/${LOCK_SHA}" > .task-meta-cache-key
+          fi
+  cacheload:
+    cmds:
+      - task: cacheload-backend-go
+      - task: cacheload-frontend-js
+  cacheload-backend:
+    cmds:
+      - task: cacheload-backend-go
+  cacheload-backend-go:
+    dir: '{{.ROOT_DIR}}/backend'
+    deps:
+      - cachekey-backend-go
+    cmds:
+      - cmd: |-
+          if [[ -n "${CI_CACHE_TOKEN:-}" ]] && [[ -f ".task-meta-cache-key" ]]; then
+            request_key=$(cat ".task-meta-cache-key" | tr -d '\r\n')
+            start_ts=$(date +%s)
+            header_file=$(mktemp)
+            cache_file=$(mktemp)
+
+            echo "loading cache..."
+            echo "request key: ${request_key}"
+            if curl -fsSL -D "${header_file}" -H "authorization: Bearer ${CI_CACHE_TOKEN}" "https://ci-cache.markormesher.co.uk/cache/${request_key}" -o "${cache_file}"; then
+              actual_key=$(cat "${header_file}" | grep -i x-cache-key | cut -d ' ' -f 2 | tr -d '\r\n')
+              size=$(du -h "${cache_file}" | awk '{ print $1 }')
+              echo "received key: ${actual_key}"
+              echo "received size: ${size}"
+
+              if [[ "${actual_key}" == "${request_key}" ]]; then
+                touch .task-meta-cache-exact-match
+              fi
+
+              echo "unpacking cache..."
+              tar xzP -f "${cache_file}" || true
+            else
+              echo "no cache loaded"
+            fi
+
+            rm -f "${cache_file}" "${header_file}"
+            end_ts=$(date +%s)
+            echo "loading cache took $(( $end_ts - $start_ts ))s"
+          fi
+  cacheload-frontend:
+    cmds:
+      - task: cacheload-frontend-js
+  cacheload-frontend-js:
+    dir: '{{.ROOT_DIR}}/frontend'
+    deps:
+      - cachekey-frontend-js
+    cmds:
+      - cmd: |-
+          if [[ -n "${CI_CACHE_TOKEN:-}" ]] && [[ -f ".task-meta-cache-key" ]]; then
+            request_key=$(cat ".task-meta-cache-key" | tr -d '\r\n')
+            start_ts=$(date +%s)
+            header_file=$(mktemp)
+            cache_file=$(mktemp)
+
+            echo "loading cache..."
+            echo "request key: ${request_key}"
+            if curl -fsSL -D "${header_file}" -H "authorization: Bearer ${CI_CACHE_TOKEN}" "https://ci-cache.markormesher.co.uk/cache/${request_key}" -o "${cache_file}"; then
+              actual_key=$(cat "${header_file}" | grep -i x-cache-key | cut -d ' ' -f 2 | tr -d '\r\n')
+              size=$(du -h "${cache_file}" | awk '{ print $1 }')
+              echo "received key: ${actual_key}"
+              echo "received size: ${size}"
+
+              if [[ "${actual_key}" == "${request_key}" ]]; then
+                touch .task-meta-cache-exact-match
+              fi
+
+              echo "unpacking cache..."
+              tar xzP -f "${cache_file}" || true
+            else
+              echo "no cache loaded"
+            fi
+
+            rm -f "${cache_file}" "${header_file}"
+            end_ts=$(date +%s)
+            echo "loading cache took $(( $end_ts - $start_ts ))s"
+          fi
+  cachesave:
+    cmds:
+      - task: cachesave-backend-go
+      - task: cachesave-frontend-js
+  cachesave-backend:
+    cmds:
+      - task: cachesave-backend-go
+  cachesave-backend-go:
+    dir: '{{.ROOT_DIR}}/backend'
+    deps:
+      - cachekey-backend-go
+    cmds:
+      - cmd: echo "$(go env GOMODCACHE) $(go env GOCACHE)" > .task-meta-cache-paths
+      - cmd: |-
+          if [[ -n "${CI_CACHE_TOKEN:-}" ]] && [[ -f ".task-meta-cache-key" ]]; then
+            if [[ -f .task-meta-cache-exact-match ]]; then
+              echo "skipping re-upload because an exact match was returned from the cache"
+              exit 0
+            fi
+
+            request_key=$(cat ".task-meta-cache-key")
+            start_ts=$(date +%s)
+            cache_file=$(mktemp)
+
+            echo "packing cache..."
+            tar czP -f "${cache_file}" $(cat .task-meta-cache-paths)
+            size=$(du -h "${cache_file}" | awk '{ print $1 }')
+
+            echo "uploading cache (${size})..."
+            if curl -fsSL -H "authorization: Bearer ${CI_CACHE_TOKEN}" -X PUT "https://ci-cache.markormesher.co.uk/cache/${request_key}" --data-binary "@${cache_file}"; then
+              echo "uploaded cache"
+            else
+              echo "error saving cache"
+            fi
+
+            rm -f "${cache_file}"
+            end_ts=$(date +%s)
+            echo "saving cache took $(( $end_ts - $start_ts ))s"
+          fi
+  cachesave-frontend:
+    cmds:
+      - task: cachesave-frontend-js
+  cachesave-frontend-js:
+    dir: '{{.ROOT_DIR}}/frontend'
+    deps:
+      - cachekey-frontend-js
+    cmds:
+      - cmd: pnpm store path > .task-meta-cache-paths
+      - cmd: |-
+          if [[ -n "${CI_CACHE_TOKEN:-}" ]] && [[ -f ".task-meta-cache-key" ]]; then
+            if [[ -f .task-meta-cache-exact-match ]]; then
+              echo "skipping re-upload because an exact match was returned from the cache"
+              exit 0
+            fi
+
+            request_key=$(cat ".task-meta-cache-key")
+            start_ts=$(date +%s)
+            cache_file=$(mktemp)
+
+            echo "packing cache..."
+            tar czP -f "${cache_file}" $(cat .task-meta-cache-paths)
+            size=$(du -h "${cache_file}" | awk '{ print $1 }')
+
+            echo "uploading cache (${size})..."
+            if curl -fsSL -H "authorization: Bearer ${CI_CACHE_TOKEN}" -X PUT "https://ci-cache.markormesher.co.uk/cache/${request_key}" --data-binary "@${cache_file}"; then
+              echo "uploaded cache"
+            else
+              echo "error saving cache"
+            fi
+
+            rm -f "${cache_file}"
+            end_ts=$(date +%s)
+            echo "saving cache took $(( $end_ts - $start_ts ))s"
+          fi
   deps:
     cmds:
-      - task: deps-go-backend
-      - task: deps-js-frontend
-  deps-go:
+      - task: deps-backend-go
+      - task: deps-frontend-js
+  deps-backend:
     cmds:
-      - task: deps-go-backend
-  deps-go-backend:
+      - task: deps-backend-go
+  deps-backend-go:
     dir: '{{.ROOT_DIR}}/backend'
     cmds:
-      - cmd: go mod tidy && go mod download --json
+      - cmd: go mod download
       - cmd: (go tool || true) | (grep '\.' || true) | while read t; do go build -o /dev/null $t; done
-  deps-js:
+  deps-frontend:
     cmds:
-      - task: deps-js-frontend
-  deps-js-frontend:
+      - task: deps-frontend-js
+  deps-frontend-js:
     dir: '{{.ROOT_DIR}}/frontend'
     cmds:
       - cmd: pnpm install --frozen-lockfile
       - cmd: pnpm peers check
   gen:
     cmds:
-      - task: gen-buf-proto
-      - task: gen-sqlc-sql
-  gen-buf:
+      - task: gen-proto-buf
+      - task: gen-sql-sqlc
+  gen-proto:
     cmds:
-      - task: gen-buf-proto
-  gen-buf-proto:
+      - task: gen-proto-buf
+  gen-proto-buf:
     dir: '{{.ROOT_DIR}}/proto'
     cmds:
       - cmd: buf generate
-  gen-sqlc:
+  gen-sql:
     cmds:
-      - task: gen-sqlc-sql
-  gen-sqlc-sql:
+      - task: gen-sql-sqlc
+  gen-sql-sqlc:
     dir: '{{.ROOT_DIR}}/sql'
     cmds:
       - cmd: sqlc generate
@@ -203,21 +395,13 @@ tasks:
           cat .task-meta-imgrefs | grep "." || echo "None"
   lint:
     cmds:
-      - task: lint-buf-proto
-      - task: lint-go-backend
-      - task: lint-js-frontend
-  lint-buf:
+      - task: lint-backend-go
+      - task: lint-frontend-js
+      - task: lint-proto-buf
+  lint-backend:
     cmds:
-      - task: lint-buf-proto
-  lint-buf-proto:
-    dir: '{{.ROOT_DIR}}/proto'
-    cmds:
-      - cmd: buf format --diff --exit-code
-      - cmd: buf lint
-  lint-go:
-    cmds:
-      - task: lint-go-backend
-  lint-go-backend:
+      - task: lint-backend-go
+  lint-backend-go:
     dir: '{{.ROOT_DIR}}/backend'
     cmds:
       - cmd: |-
@@ -252,36 +436,44 @@ tasks:
           fi
 
           exit $exit_code
-  lint-js:
+  lint-frontend:
     cmds:
-      - task: lint-js-frontend
-  lint-js-frontend:
+      - task: lint-frontend-js
+  lint-frontend-js:
     dir: '{{.ROOT_DIR}}/frontend'
     cmds:
       - cmd: pnpm lint
-  lintfix:
+  lint-proto:
     cmds:
-      - task: lintfix-buf-proto
-      - task: lintfix-go-backend
-      - task: lintfix-js-frontend
-  lintfix-buf:
-    cmds:
-      - task: lintfix-buf-proto
-  lintfix-buf-proto:
+      - task: lint-proto-buf
+  lint-proto-buf:
     dir: '{{.ROOT_DIR}}/proto'
     cmds:
-      - cmd: buf format --write
-  lintfix-go:
+      - cmd: buf format --diff --exit-code
+      - cmd: buf lint
+  lintfix:
     cmds:
-      - task: lintfix-go-backend
-  lintfix-go-backend:
+      - task: lintfix-backend-go
+      - task: lintfix-frontend-js
+      - task: lintfix-proto-buf
+  lintfix-backend:
+    cmds:
+      - task: lintfix-backend-go
+  lintfix-backend-go:
     dir: '{{.ROOT_DIR}}/backend'
     cmds:
       - cmd: gofmt -s -w .
-  lintfix-js:
+  lintfix-frontend:
     cmds:
-      - task: lintfix-js-frontend
-  lintfix-js-frontend:
+      - task: lintfix-frontend-js
+  lintfix-frontend-js:
     dir: '{{.ROOT_DIR}}/frontend'
     cmds:
       - cmd: pnpm lintfix
+  lintfix-proto:
+    cmds:
+      - task: lintfix-proto-buf
+  lintfix-proto-buf:
+    dir: '{{.ROOT_DIR}}/proto'
+    cmds:
+      - cmd: buf format --write
