@@ -231,7 +231,6 @@ tasks:
     dir: '{{.ROOT_DIR}}/backend'
     cmds:
       - cmd: go mod download
-      - cmd: (go tool || true) | (grep '\.' || true) | while read t; do go build -o /dev/null $t; done
   deps-frontend:
     cmds:
       - task: deps-frontend-js
