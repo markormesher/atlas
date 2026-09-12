@@ -35,7 +35,7 @@ jobs:
   check-proto-buf:
     runs-on: ubuntu-latest
     container:
-      image: docker.io/bufbuild/buf:1.72.0@sha256:65bd496a89c762ad7151ca9e7d885a45dacb3671a8e8ec39738b9f844d3405ea
+      image: docker.io/bufbuild/buf:1.73.0@sha256:75d8f756f0919dcded71e67968a91adfe55fe4dd62c4900c57bbfcd7fe625608
     steps:
       - uses: markormesher/ci-resources/setup@62ded02daecfff84429580ffb8539b570ec5ba5e # v0.9.0
       - run: ./task -s lint-proto-buf
