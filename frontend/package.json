@@ -10,7 +10,7 @@
     "lint": "eslint ./src && prettier -c ./src/**/*.css",
     "lintfix": "eslint --fix ./src && prettier --write ./src/**/*.css"
   },
-  "packageManager": "pnpm@12.4.1",
+  "packageManager": "pnpm@12.4.2",
   "devDependencies": {
     "@bufbuild/buf": "1.73.0",
     "@bufbuild/protoc-gen-es": "2.15.0",
