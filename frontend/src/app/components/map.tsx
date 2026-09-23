@@ -27,10 +27,10 @@ function addPlace(map: L.Map, place: Place): void {
     .addTo(map);
 }
 
-function MapView(): ReactElement {
-  const apiTransport = createConnectTransport({ baseUrl: "/" });
-  const apiClient = createClient(AtlasService, apiTransport);
+const apiTransport = createConnectTransport({ baseUrl: "/" });
+const apiClient = createClient(AtlasService, apiTransport);
 
+function MapView(): ReactElement {
   const mapDivRef = React.useRef<HTMLDivElement>(null);
   const [status, setStatus] = React.useState("Loading...");
 
@@ -72,7 +72,7 @@ function MapView(): ReactElement {
           }
         });
     }
-  }, [apiClient.getPlaces]);
+  }, []);
 
   return (
     <>
