@@ -1,10 +1,10 @@
 import React from "react";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createClient } from "@connectrpc/connect";
-import { AtlasService, Place } from "../../api_gen/atlas/v1/atlas_pb.js";
+import { AtlasService, type Place } from "../../api_gen/atlas/v1/atlas_pb.js";
 import { toastBus } from "./toaster.js";
 
 const testPlace: Place = {
@@ -16,7 +16,18 @@ const testPlace: Place = {
   lon: 0,
 };
 
-function Map(): ReactElement {
+function addPlace(map: L.Map, place: Place): void {
+  L.circle([place.lat, place.lon], {
+    color: "#ff0033",
+    fillColor: "#ff0033",
+    fillOpacity: 0.4,
+    radius: 5000,
+  })
+    .bindPopup(`${place.name}, ${place.country}`)
+    .addTo(map);
+}
+
+function MapView(): ReactElement {
   const apiTransport = createConnectTransport({ baseUrl: "/" });
   const apiClient = createClient(AtlasService, apiTransport);
 
@@ -40,12 +51,14 @@ function Map(): ReactElement {
       apiClient
         .getPlaces({})
         .then((res) => {
-          res.places.forEach((p) => addPlace(map, p));
+          res.places.forEach((p) => {
+            addPlace(map, p);
+          });
 
           const placeCount = res.places.length;
-          const placeWord = placeCount == 1 ? "place" : "places";
+          const placeWord = placeCount === 1 ? "place" : "places";
           const countryCount = new Set(res.places.map((p) => p.country)).size;
-          const countryWord = countryCount == 1 ? "country" : "countries";
+          const countryWord = countryCount === 1 ? "country" : "countries";
 
           setStatus(`${placeCount} ${placeWord}; ${countryCount} ${countryWord}`);
         })
@@ -59,18 +72,7 @@ function Map(): ReactElement {
           }
         });
     }
-  }, []);
-
-  function addPlace(map: L.Map, place: Place) {
-    L.circle([place.lat, place.lon], {
-      color: "#ff0033",
-      fillColor: "#ff0033",
-      fillOpacity: 0.4,
-      radius: 5000,
-    })
-      .bindPopup(`${place.name}, ${place.country}`)
-      .addTo(map);
-  }
+  }, [apiClient.getPlaces]);
 
   return (
     <>
@@ -80,4 +82,4 @@ function Map(): ReactElement {
   );
 }
 
-export { Map };
+export { MapView };

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { v4 } from "uuid";
 
 const toastDurationMs = 4000;
@@ -11,9 +11,9 @@ type Toast = {
   expiryTs: number;
 };
 
-const toastBus = (function () {
+const toastBus = (() => {
   type ToastListener = (t: Toast) => void;
-  let listener: ToastListener | undefined = undefined;
+  let listener: ToastListener | undefined;
 
   function setListener(l: ToastListener) {
     listener = l;
@@ -22,7 +22,7 @@ const toastBus = (function () {
   function emit(t: Omit<Toast, "id" | "expiryTs">) {
     listener?.call(null, {
       id: v4(),
-      expiryTs: new Date().getTime() + toastDurationMs,
+      expiryTs: Date.now() + toastDurationMs,
       ...t,
     });
   }
@@ -34,16 +34,14 @@ const toastBus = (function () {
 })();
 
 function Toaster(): ReactElement {
-  const [renderToken, setRenderToken] = React.useState(0);
+  const [_renderToken, setRenderToken] = React.useState(0);
   const [toasts, setToasts] = React.useState<Toast[]>([]);
-
-  const triggerRender = () => setRenderToken(new Date().getTime());
 
   // toast listener
   React.useEffect(() => {
     const listener = (t: Toast) => {
       setToasts((curr) => [t, ...curr]);
-      triggerRender();
+      setRenderToken(Date.now());
     };
     toastBus.setListener(listener);
   }, []);
@@ -52,13 +50,13 @@ function Toaster(): ReactElement {
   // this is used to avoid any effects running when there are no toasts to care about
   React.useEffect(() => {
     // remove toasts that are past expiry + animation grace
-    const nowTs = new Date().getTime();
+    const nowTs = Date.now();
     setToasts((curr) => curr.filter((t) => t.expiryTs + animationGraceMs >= nowTs));
 
     // trigger another loop if there are still toasts to display
     let t: NodeJS.Timeout;
     if (toasts.length > 0) {
-      t = setTimeout(() => triggerRender(), 100);
+      t = setTimeout(() => setRenderToken(Date.now()), 100);
     }
 
     return function cleanup() {
@@ -66,22 +64,18 @@ function Toaster(): ReactElement {
         clearTimeout(t);
       }
     };
-  }, [renderToken]);
+  }, [toasts.length]);
 
   const toastOutput: ReactElement[] = [];
   let toastsVisible = 0;
-  const nowTs = new Date().getTime();
+  const nowTs = Date.now();
   for (const t of toasts) {
     const remainingLifeMs = t.expiryTs - nowTs;
     const visible = remainingLifeMs > 0;
     const pos = 15 + toastsVisible * 55;
 
     toastOutput.push(
-      <div
-        key={t.id}
-        className={`toast ${visible ? "toast-show" : ""} toast-${t.sentiment}`}
-        style={{ top: `${pos}px` }}
-      >
+      <div key={t.id} className={`toast ${visible ? "toast-show" : ""} toast-${t.sentiment}`} style={{ top: `${pos}px` }}>
         <div className={`toast-text`}>{t.text}</div>
         <div className={`toast-progress`} style={{ width: `${(remainingLifeMs / toastDurationMs) * 100}%` }}></div>
       </div>,

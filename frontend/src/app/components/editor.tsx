@@ -1,8 +1,8 @@
 import React from "react";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createClient } from "@connectrpc/connect";
-import { AtlasService, Place } from "../../api_gen/atlas/v1/atlas_pb.js";
+import { AtlasService, type Place } from "../../api_gen/atlas/v1/atlas_pb.js";
 import { toastBus } from "./toaster.js";
 
 type OrderedPlace = Place & { order: number };
@@ -13,7 +13,7 @@ function Editor(): ReactElement {
   const apiTransport = createConnectTransport({ baseUrl: "/" });
   const apiClient = createClient(AtlasService, apiTransport);
 
-  const [reloadTrigger, setReloadTrigger] = React.useState(0);
+  const [_reloadTrigger, setReloadTrigger] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState<boolean | null>(null);
   const [places, setPlaces] = React.useState<Record<string, OrderedPlace>>({});
 
@@ -25,7 +25,7 @@ function Editor(): ReactElement {
         console.log(err);
         window.location.assign("/login");
       });
-  }, []);
+  }, [apiClient.authCheck]);
 
   React.useEffect(() => {
     apiClient
@@ -34,7 +34,9 @@ function Editor(): ReactElement {
         const placeMap: Record<string, OrderedPlace> = {};
         res.places
           .sort((a, b) => `${a.country}, ${a.name}`.localeCompare(`${b.country}, ${b.name}`))
-          .forEach((p, i) => (placeMap[p.id] = { ...p, order: i }));
+          .forEach((p, i) => {
+            placeMap[p.id] = { ...p, order: i };
+          });
 
         placeMap[zeroId] = {
           $typeName: "atlas.v1.Place",
@@ -52,7 +54,7 @@ function Editor(): ReactElement {
         toastBus.emit({ sentiment: "error", text: "Failed to load places" });
         console.log(err);
       });
-  }, [reloadTrigger]);
+  }, [apiClient.getPlaces]);
 
   function setStringValue(id: string, key: "name" | "country", evt: React.ChangeEvent<HTMLInputElement>): void {
     const value = evt.target.value;
@@ -66,7 +68,7 @@ function Editor(): ReactElement {
   }
 
   function setFloatValue(id: string, key: "lat" | "lon", evt: React.ChangeEvent<HTMLInputElement>): void {
-    let value = parseFloat(evt.target.value.trim());
+    const value = parseFloat(evt.target.value.trim());
     setPlaces((p) => {
       if (p[id]) {
         p[id][key] = value;
@@ -86,7 +88,7 @@ function Editor(): ReactElement {
       .updatePlace({ place })
       .then(() => {
         toastBus.emit({ sentiment: "success", text: "Place updated" });
-        setReloadTrigger(new Date().getTime());
+        setReloadTrigger(Date.now());
       })
       .catch((err) => {
         toastBus.emit({ sentiment: "error", text: "Failed to update place" });
@@ -99,7 +101,7 @@ function Editor(): ReactElement {
       .deletePlace({ id })
       .then(() => {
         toastBus.emit({ sentiment: "success", text: "Place deleted" });
-        setReloadTrigger(new Date().getTime());
+        setReloadTrigger(Date.now());
       })
       .catch((err) => {
         toastBus.emit({ sentiment: "error", text: "Failed to delete place" });
@@ -135,10 +137,9 @@ function Editor(): ReactElement {
           {Object.entries(places)
             .sort((a, b) => a[1].order - b[1].order)
             .map(([id, place]) => {
-              const isValid =
-                place.name.length > 0 && place.country.length > 0 && !isNaN(place.lat) && !isNaN(place.lon);
-              const isBlank = place.name == "" && place.country == "";
-              const isNew = id == zeroId;
+              const isValid = place.name.length > 0 && place.country.length > 0 && !Number.isNaN(place.lat) && !Number.isNaN(place.lon);
+              const isBlank = place.name === "" && place.country === "";
+              const isNew = id === zeroId;
 
               return (
                 <tr key={id}>
@@ -162,7 +163,7 @@ function Editor(): ReactElement {
                     <input
                       type={"number"}
                       placeholder={isNew ? "Create new..." : undefined}
-                      value={isNaN(place.lat) ? "" : place.lat}
+                      value={Number.isNaN(place.lat) ? "" : place.lat}
                       onChange={(evt) => setFloatValue(id, "lat", evt)}
                       step={"0.0001"}
                     />
@@ -171,7 +172,7 @@ function Editor(): ReactElement {
                     <input
                       type={"number"}
                       placeholder={isNew ? "Create new..." : undefined}
-                      value={isNaN(place.lon) ? "" : place.lon}
+                      value={Number.isNaN(place.lon) ? "" : place.lon}
                       onChange={(evt) => setFloatValue(id, "lon", evt)}
                       step={"0.0001"}
                     />
