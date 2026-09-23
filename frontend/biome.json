@@ -1,0 +1,3 @@
+{
+  "extends": ["@markormesher/biome-config/biome-config"]
+}
