@@ -219,8 +219,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
       sass:
-        specifier: 1.104.1
-        version: 1.104.1
+        specifier: 1.105.0
+        version: 1.105.0
       ts-proto:
         specifier: 2.12.4
         version: 2.12.4
@@ -229,7 +229,7 @@ importers:
         version: 6.0.3
       vite:
         specifier: 8.3.0
-        version: 8.3.0(@types/node@24.13.6)(sass@1.104.1)
+        version: 8.3.0(@types/node@24.13.6)(sass@1.105.0)
 
 packages:
 
@@ -758,8 +758,8 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  sass@1.104.1:
-    resolution: {integrity: sha512-yDA+1aIG3EHgN4V/BvuhCvu61FF6hEd4e+9DxikUm9U0CAGuvdIZ/UYy7qbOxjhbbWQraoyLlMuzdRGOSV5Bmw==}
+  sass@1.105.0:
+    resolution: {integrity: sha512-4EjSuRTyG8M4yRXXY1PT9OUV5zz23xBxJkbIAprohKHqf6HOU4MCpE3U3vAC+iO1gxobBjESNbcj8rYAQZWnyA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -1220,7 +1220,7 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.2.9
       '@rolldown/binding-win32-x64-msvc': 1.2.9
 
-  sass@1.104.1:
+  sass@1.105.0:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
@@ -1265,7 +1265,7 @@ snapshots:
 
   uuid@14.0.2: {}
 
-  vite@8.3.0(@types/node@24.13.6)(sass@1.104.1):
+  vite@8.3.0(@types/node@24.13.6)(sass@1.105.0):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -1275,4 +1275,4 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.13.6
       fsevents: 2.3.3
-      sass: 1.104.1
+      sass: 1.105.0
