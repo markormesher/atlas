@@ -192,7 +192,7 @@ importers:
         version: 14.0.2
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.5.14
+        specifier: 2.5.14
         version: 2.5.14
       '@bufbuild/buf':
         specifier: 1.73.0
@@ -201,8 +201,8 @@ importers:
         specifier: 2.15.0
         version: 2.15.0(@bufbuild/protobuf@2.15.0)(supports-color@7.2.0)
       '@markormesher/biome-config':
-        specifier: github:markormesher/biome-config#semver:^0.3.0
-        version: https://codeload.github.com/markormesher/biome-config/tar.gz/c12be28c32c9a5fa6850f932bd8bdfc7b3b0ff1d
+        specifier: github:markormesher/biome-config#semver:v0.3.1
+        version: https://codeload.github.com/markormesher/biome-config/tar.gz/b35757e94d8b9bbda1b05b149961bd28124f8e4e
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -361,8 +361,8 @@ packages:
     peerDependencies:
       '@bufbuild/protobuf': ^2.7.0
 
-  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/c12be28c32c9a5fa6850f932bd8bdfc7b3b0ff1d':
-    resolution: {gitHosted: true, integrity: sha512-1Y7A3sP0EujZ8LmY0cZTXqeM5GF6DUHYP8YrqVWTZ3pxW5JGQ/Zvbpbt9MwzvQSqqRpZqFnaW6Ioix8+tJ6/HQ==, tarball: https://codeload.github.com/markormesher/biome-config/tar.gz/c12be28c32c9a5fa6850f932bd8bdfc7b3b0ff1d}
+  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/b35757e94d8b9bbda1b05b149961bd28124f8e4e':
+    resolution: {gitHosted: true, integrity: sha512-XeGwBewGWwt+6IAsWH9M5O0fjtVAUZH5jEAWcH8dB8FLV9dSgneF0x9EqKpqrfwRrn8m+p9MCAZTVsBaaJ5wHQ==, tarball: https://codeload.github.com/markormesher/biome-config/tar.gz/b35757e94d8b9bbda1b05b149961bd28124f8e4e}
     version: 0.0.0
 
   '@oxc-project/types@0.150.0':
@@ -1060,7 +1060,7 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 2.15.0
 
-  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/c12be28c32c9a5fa6850f932bd8bdfc7b3b0ff1d': {}
+  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/b35757e94d8b9bbda1b05b149961bd28124f8e4e': {}
 
   '@oxc-project/types@0.150.0': {}
 
