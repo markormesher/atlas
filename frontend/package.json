@@ -15,7 +15,7 @@
     "@biomejs/biome": "2.5.14",
     "@bufbuild/buf": "1.73.0",
     "@bufbuild/protoc-gen-es": "2.15.0",
-    "@markormesher/biome-config": "github:markormesher/biome-config#semver:v0.3.2",
+    "@markormesher/biome-config": "github:markormesher/biome-config#semver:v0.3.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/leaflet": "1.9.22",
     "@types/node": "24.13.6",
