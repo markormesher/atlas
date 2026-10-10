@@ -6,6 +6,7 @@ toolchain go1.27.2
 
 require (
 	connectrpc.com/connect v1.21.0
+	connectrpc.com/connect/v2 v2.0.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
 	github.com/jackc/pgx/v5 v5.11.0
