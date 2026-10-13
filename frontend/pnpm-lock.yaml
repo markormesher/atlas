@@ -219,8 +219,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
       ts-proto:
-        specifier: 2.13.1
-        version: 2.13.1
+        specifier: 2.15.0
+        version: 2.15.0
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -784,8 +784,8 @@ packages:
   ts-proto-descriptors@2.1.0:
     resolution: {integrity: sha512-S5EZYEQ6L9KLFfjSRpZWDIXDV/W7tAj8uW7pLsihIxyr62EAVSiKuVPwE8iWnr849Bqa53enex1jhDUcpgquzA==}
 
-  ts-proto@2.13.1:
-    resolution: {integrity: sha512-1IperfyOIjC5qhiocjpXVtGr4KIvo1qap1h0CDkdsTsdMzOUV7RUy3cOETxMUq1f/6ysVvVKGHKSGUL8oVPxug==}
+  ts-proto@2.15.0:
+    resolution: {integrity: sha512-gF4REbeiwHRonatnj9MwR3s9A49XmQWzzjso+2oAN8IrLya1HWg0zEAOi0AIH/sm7nzv5s3fr3voSUBYaV2Txg==}
     hasBin: true
 
   typescript@5.4.5:
@@ -1216,7 +1216,7 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 2.16.0
 
-  ts-proto@2.13.1:
+  ts-proto@2.15.0:
     dependencies:
       '@bufbuild/protobuf': 2.16.0
       case-anything: 2.1.13
