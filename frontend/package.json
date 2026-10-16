@@ -10,7 +10,7 @@
     "lint": "biome lint && biome format",
     "lintfix": "biome lint --write && biome format --write"
   },
-  "packageManager": "pnpm@12.11.2",
+  "packageManager": "pnpm@12.13.0",
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
     "@bufbuild/buf": "1.73.0",
