@@ -13,7 +13,7 @@
   "packageManager": "pnpm@12.11.2",
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
-    "@bufbuild/buf": "1.73.0",
+    "@bufbuild/buf": "1.74.0",
     "@bufbuild/protoc-gen-es": "2.16.0",
     "@markormesher/biome-config": "github:markormesher/biome-config#semver:v0.3.5",
     "@tsconfig/strictest": "2.0.8",
