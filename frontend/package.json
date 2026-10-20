@@ -21,7 +21,7 @@
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "ts-proto": "2.15.3",
+    "ts-proto": "2.18.0",
     "typescript": "7.0.2",
     "vite": "8.3.4"
   },
