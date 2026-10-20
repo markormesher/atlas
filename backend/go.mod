@@ -2,7 +2,7 @@ module github.com/markormesher/atlas
 
 go 1.26.0
 
-toolchain go1.27.2
+toolchain go1.27.3
 
 require (
 	connectrpc.com/connect v1.21.1
