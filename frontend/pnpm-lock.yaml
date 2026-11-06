@@ -201,8 +201,8 @@ importers:
         specifier: 2.16.0
         version: 2.16.0(@bufbuild/protobuf@2.16.0)
       '@markormesher/biome-config':
-        specifier: github:markormesher/biome-config#semver:v0.3.10
-        version: https://codeload.github.com/markormesher/biome-config/tar.gz/2610aee68251cc83cbb9f33d9d72c0d108a39b6d
+        specifier: github:markormesher/biome-config#semver:v0.3.11
+        version: https://codeload.github.com/markormesher/biome-config/tar.gz/101b446d312fb6bceeb350e006803bc9eaf3a427
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -373,8 +373,8 @@ packages:
     peerDependencies:
       '@bufbuild/protobuf': ^2.7.0
 
-  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/2610aee68251cc83cbb9f33d9d72c0d108a39b6d':
-    resolution: {gitHosted: true, integrity: sha512-czixsMCfrWk++ZVxxpdc74rJqKfOQnOEQB2hwg5f+LPD9n/SO6uIfoBxcuq79LqyHLkuCYCFLUkX3JiFDAYaXw==, tarball: https://codeload.github.com/markormesher/biome-config/tar.gz/2610aee68251cc83cbb9f33d9d72c0d108a39b6d}
+  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/101b446d312fb6bceeb350e006803bc9eaf3a427':
+    resolution: {gitHosted: true, integrity: sha512-osML3qt/YZGZLHk5cByXi5/2cbx+HOsbTVUXAlOAnapDq7B/e7OphIAovsXbHdT95NZYjSCO+dQNJgRQGqOu/A==, tarball: https://codeload.github.com/markormesher/biome-config/tar.gz/101b446d312fb6bceeb350e006803bc9eaf3a427}
     version: 0.0.0
 
   '@oxc-project/types@0.156.0':
@@ -963,7 +963,7 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 2.16.0
 
-  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/2610aee68251cc83cbb9f33d9d72c0d108a39b6d': {}
+  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/101b446d312fb6bceeb350e006803bc9eaf3a427': {}
 
   '@oxc-project/types@0.156.0': {}
 
