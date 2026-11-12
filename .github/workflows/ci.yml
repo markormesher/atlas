@@ -20,7 +20,7 @@ jobs:
   check-frontend-js:
     runs-on: ubuntu-latest
     container:
-      image: docker.io/node:26.13.0@sha256:438603bbb5cda404b9416f0b5c8026f61501ab911760d861ec28c36b5d675725
+      image: docker.io/node:26.13.1@sha256:e18c3ccdf7d71619990b0e85639f506e2028a95410999cab24cc373cbd10e0ac
     steps:
       - uses: markormesher/ci-resources/setup@cab6a24510515dfdc829ed2d2b1fa722a34bb00b # v0.10.0
       - run: npm install -g --force yarn pnpm
