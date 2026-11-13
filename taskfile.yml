@@ -1,5 +1,6 @@
 # This file is maintained by Tedium - manual edits will be overwritten!
 
+---
 version: "3"
 includes:
   local:
@@ -14,7 +15,7 @@ tasks:
     cmds:
       - task: cachekey-backend-go
   cachekey-backend-go:
-    dir: '{{.ROOT_DIR}}/backend'
+    dir: "{{.ROOT_DIR}}/backend"
     generates:
       - .task-meta-cache-key
     cmds:
@@ -42,7 +43,7 @@ tasks:
     cmds:
       - task: cachekey-frontend-js
   cachekey-frontend-js:
-    dir: '{{.ROOT_DIR}}/frontend'
+    dir: "{{.ROOT_DIR}}/frontend"
     generates:
       - .task-meta-cache-key
     cmds:
@@ -76,7 +77,7 @@ tasks:
     cmds:
       - task: cacheload-backend-go
   cacheload-backend-go:
-    dir: '{{.ROOT_DIR}}/backend'
+    dir: "{{.ROOT_DIR}}/backend"
     deps:
       - cachekey-backend-go
     cmds:
@@ -113,7 +114,7 @@ tasks:
     cmds:
       - task: cacheload-frontend-js
   cacheload-frontend-js:
-    dir: '{{.ROOT_DIR}}/frontend'
+    dir: "{{.ROOT_DIR}}/frontend"
     deps:
       - cachekey-frontend-js
     cmds:
@@ -154,7 +155,7 @@ tasks:
     cmds:
       - task: cachesave-backend-go
   cachesave-backend-go:
-    dir: '{{.ROOT_DIR}}/backend'
+    dir: "{{.ROOT_DIR}}/backend"
     deps:
       - cachekey-backend-go
     cmds:
@@ -189,7 +190,7 @@ tasks:
     cmds:
       - task: cachesave-frontend-js
   cachesave-frontend-js:
-    dir: '{{.ROOT_DIR}}/frontend'
+    dir: "{{.ROOT_DIR}}/frontend"
     deps:
       - cachekey-frontend-js
     cmds:
@@ -228,14 +229,14 @@ tasks:
     cmds:
       - task: deps-backend-go
   deps-backend-go:
-    dir: '{{.ROOT_DIR}}/backend'
+    dir: "{{.ROOT_DIR}}/backend"
     cmds:
       - cmd: go mod download
   deps-frontend:
     cmds:
       - task: deps-frontend-js
   deps-frontend-js:
-    dir: '{{.ROOT_DIR}}/frontend'
+    dir: "{{.ROOT_DIR}}/frontend"
     cmds:
       - cmd: pnpm install --frozen-lockfile
       - cmd: pnpm peers check
@@ -247,21 +248,21 @@ tasks:
     cmds:
       - task: gen-proto-buf
   gen-proto-buf:
-    dir: '{{.ROOT_DIR}}/proto'
+    dir: "{{.ROOT_DIR}}/proto"
     cmds:
       - cmd: buf generate
   gen-sql:
     cmds:
       - task: gen-sql-sqlc
   gen-sql-sqlc:
-    dir: '{{.ROOT_DIR}}/sql'
+    dir: "{{.ROOT_DIR}}/sql"
     cmds:
       - cmd: sqlc generate
   imgbuild:
     cmds:
       - task: imgbuild-root
   imgbuild-root:
-    dir: '{{.ROOT_DIR}}'
+    dir: "{{.ROOT_DIR}}"
     deps:
       - imgrefs-root
     cmds:
@@ -304,7 +305,7 @@ tasks:
     cmds:
       - task: imgpush-root
   imgpush-root:
-    dir: '{{.ROOT_DIR}}'
+    dir: "{{.ROOT_DIR}}"
     deps:
       - imgrefs-root
     cmds:
@@ -335,7 +336,7 @@ tasks:
     cmds:
       - task: imgrefs-root
   imgrefs-root:
-    dir: '{{.ROOT_DIR}}'
+    dir: "{{.ROOT_DIR}}"
     cmds:
       - cmd: |-
           set -euo pipefail
@@ -401,7 +402,7 @@ tasks:
     cmds:
       - task: lint-backend-go
   lint-backend-go:
-    dir: '{{.ROOT_DIR}}/backend'
+    dir: "{{.ROOT_DIR}}/backend"
     cmds:
       - cmd: |-
           exit_code=0
@@ -439,14 +440,14 @@ tasks:
     cmds:
       - task: lint-frontend-js
   lint-frontend-js:
-    dir: '{{.ROOT_DIR}}/frontend'
+    dir: "{{.ROOT_DIR}}/frontend"
     cmds:
       - cmd: pnpm lint
   lint-proto:
     cmds:
       - task: lint-proto-buf
   lint-proto-buf:
-    dir: '{{.ROOT_DIR}}/proto'
+    dir: "{{.ROOT_DIR}}/proto"
     cmds:
       - cmd: buf format --diff --exit-code
       - cmd: buf lint
@@ -459,20 +460,20 @@ tasks:
     cmds:
       - task: lintfix-backend-go
   lintfix-backend-go:
-    dir: '{{.ROOT_DIR}}/backend'
+    dir: "{{.ROOT_DIR}}/backend"
     cmds:
       - cmd: gofmt -s -w .
   lintfix-frontend:
     cmds:
       - task: lintfix-frontend-js
   lintfix-frontend-js:
-    dir: '{{.ROOT_DIR}}/frontend'
+    dir: "{{.ROOT_DIR}}/frontend"
     cmds:
       - cmd: pnpm lintfix
   lintfix-proto:
     cmds:
       - task: lintfix-proto-buf
   lintfix-proto-buf:
-    dir: '{{.ROOT_DIR}}/proto'
+    dir: "{{.ROOT_DIR}}/proto"
     cmds:
       - cmd: buf format --write
