@@ -8,7 +8,7 @@ require (
 	connectrpc.com/connect v1.21.1
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
-	github.com/jackc/pgx/v5 v5.12.0
+	github.com/jackc/pgx/v5 v5.13.0
 	google.golang.org/protobuf v1.36.12
 )
 
