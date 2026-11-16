@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 
-	"connectrpc.com/connect"
+	"connectrpc.com/connect/v2"
 	"github.com/google/uuid"
 	atlasv1 "github.com/markormesher/atlas/internal/api_gen/atlas/v1"
 	"github.com/markormesher/atlas/internal/convert"

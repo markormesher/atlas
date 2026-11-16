@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"connectrpc.com/connect"
+	"connectrpc.com/connect/v2"
 )
 
 func (s *apiServer) AuthMiddleware(next http.Handler) http.Handler {
