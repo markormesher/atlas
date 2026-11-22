@@ -228,8 +228,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
       ts-proto:
-        specifier: 2.23.4
-        version: 2.23.4
+        specifier: 2.23.5
+        version: 2.23.5
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -823,14 +823,14 @@ packages:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
 
-  ts-poet@6.12.0:
-    resolution: {integrity: sha512-xo+iRNMWqyvXpFTaOAvLPA5QAWO6TZrSUs5s4Odaya3epqofBu/fMLHEWl8jPmjhA0s9sgj9sNvF1BmaQlmQkA==}
+  ts-poet@6.12.1:
+    resolution: {integrity: sha512-N/5xnO/ugx3C9Wfibfnkv48dyzn8iNce1kuhh8tpDG7bDfij4H7agPBKyxAKU6v4VfRvQZEulmSVinvGT2Qmwg==}
 
   ts-proto-descriptors@2.1.0:
     resolution: {integrity: sha512-S5EZYEQ6L9KLFfjSRpZWDIXDV/W7tAj8uW7pLsihIxyr62EAVSiKuVPwE8iWnr849Bqa53enex1jhDUcpgquzA==}
 
-  ts-proto@2.23.4:
-    resolution: {integrity: sha512-ttHJyr7b7BZrBh7Ef0L1uUeR8zZ9DTQMqf4qCAnYJ0OikUVGTmp/o/wdQhdZaVWeJweZgoe8+R5a5OcSNCvCaw==}
+  ts-proto@2.23.5:
+    resolution: {integrity: sha512-afJt8iAvcLsa2RkxvRpk6TTEuZVe808B/IlxoOrZ27Z0hcQ9BYrWuIe1wrygaRL3lAEaGMfMI5UcDdsQ8WdrSQ==}
     hasBin: true
 
   tslib@2.9.1:
@@ -1300,7 +1300,7 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.7)
       picomatch: 4.0.7
 
-  ts-poet@6.12.0:
+  ts-poet@6.12.1:
     dependencies:
       dprint-node: 1.0.8
 
@@ -1308,11 +1308,11 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 2.17.0
 
-  ts-proto@2.23.4:
+  ts-proto@2.23.5:
     dependencies:
       '@bufbuild/protobuf': 2.17.0
       case-anything: 2.1.13
-      ts-poet: 6.12.0
+      ts-poet: 6.12.1
       ts-proto-descriptors: 2.1.0
 
   tslib@2.9.1:
